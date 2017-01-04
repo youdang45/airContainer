@@ -1,0 +1,289 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#ifndef APSTUDIO_INVOKED
+#include "targetver.h"
+#endif
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// 中文(中华人民共和国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#ifndef APSTUDIO_INVOKED\r\n"
+    "#include ""targetver.h""\r\n"
+    "#endif\r\n"
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
+    "LANGUAGE 4, 2\r\n"
+    "#pragma code_page(936)\r\n"
+    "#include ""res\\container2.rc2""  // 非 Microsoft Visual C++ 编辑的资源\r\n"
+    "#include ""l.CHS\\afxres.rc""      // 标准组件\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\container2.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 170, 62
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "关于 空气储罐计算器"
+FONT 9, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,14,14,20,20
+    LTEXT           "空气储罐计算器，0.1.3 版",IDC_STATIC,42,14,114,8,SS_NOPREFIX
+    LTEXT           "Copyright (C) 2016",IDC_STATIC,42,26,114,8
+    DEFPUSHBUTTON   "确定",IDOK,113,41,50,14,WS_GROUP
+END
+
+IDD_CONTAINER_DIALOG DIALOGEX 0, 0, 549, 301
+STYLE DS_SETFONT | DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "空气储罐计算器"
+FONT 13, "宋体", 400, 0, 0x86
+BEGIN
+    COMBOBOX        IDC_COMBO_T,65,16,58,30,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EDIT_V,212,16,41,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_P,350,16,40,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_T,472,16,41,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_COMBO_C,84,32,39,33,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO_M,212,32,41,47,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EDIT_TNW,350,32,40,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_CA,472,32,41,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_COMBO_STEP,84,48,39,30,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EDIT_STEP,212,48,41,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_COMBO_IT,350,48,40,30,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EDIT_HEIGHT_MIN,79,73,21,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_HEIGHT_MAX,122,73,21,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_HDR_MIN,254,73,21,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_HDR_MAX,297,73,21,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_OUTPUT_NUM,470,73,30,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "重置",IDC_RESET,427,96,50,14
+    DEFPUSHBUTTON   "计算",IDC_CAN_CACL,488,96,50,14
+    CONTROL         "",IDC_LIST,"SysListView32",LVS_REPORT | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,130,532,137
+    PUSHBUTTON      "保存",IDSAVE,428,277,50,14
+    PUSHBUTTON      "接管人孔计算",ID_PIPE_CACL,489,277,50,14
+    LTEXT           "计算压力(MPa)：",IDC_STATIC,289,18,59,8
+    GROUPBOX        "输出数据",IDC_STATIC,7,117,532,154
+    LTEXT           "设计温度(℃)：",IDC_STATIC,414,18,54,8
+    LTEXT           "容积(m3)：",IDC_STATIC,162,18,40,8
+    LTEXT           "焊接接头系数：",IDC_STATIC,23,34,54,8
+    GROUPBOX        "输入数据",IDC_STATIC,7,4,532,87
+    LTEXT           "材料：",IDC_STATIC,170,34,24,8
+    LTEXT           "容器类型：",IDC_STATIC,23,18,39,8
+    LTEXT           "安装形式：",IDC_STATIC,296,50,39,8
+    LTEXT           "腐蚀裕量(mm)：",IDC_STATIC,414,34,55,8
+    LTEXT           "内径计算步长：",IDC_STATIC,155,50,54,8
+    LTEXT           "壁厚步长(mm)：",IDC_STATIC,23,50,55,8
+    LTEXT           "输出高度范围：",IDC_STATIC,23,75,55,8
+    LTEXT           "--",IDC_STATIC,106,75,9,8
+    LTEXT           "长径比：",IDC_STATIC,222,75,31,8
+    LTEXT           "输出结果最大数量：",IDC_STATIC,400,75,69,8
+    CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDFRAME,24,67,500,1
+    LTEXT           "--",IDC_STATIC,281,75,9,8
+    LTEXT           "厚度负偏差(mm)：",IDC_STATIC,286,34,62,8
+END
+
+IDD_2ND_DIALOG DIALOGEX 0, 0, 549, 301
+STYLE DS_SETFONT | DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "接管人孔计算"
+FONT 13, "宋体", 400, 0, 0x86
+BEGIN
+    PUSHBUTTON      "上一页",IDC_LAST_PAGE,492,280,50,14
+    LTEXT           "计算压力(MPa)：",IDC_STATIC,210,16,67,9
+    EDITTEXT        IDC_EDIT_PS,276,16,69,14,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
+    LTEXT           "设计温度(℃)：",IDC_STATIC,15,31,59,9
+    EDITTEXT        IDC_EDIT_TS,72,30,69,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
+    LTEXT           "容积(m3)：",IDC_STATIC,23,16,46,9
+    EDITTEXT        IDC_EDIT_VS,72,16,69,14,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
+    LTEXT           "焊接接头系数：",IDC_STATIC,212,31,62,9
+    EDITTEXT        IDC_EDIT_CS,276,30,69,14,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
+    LTEXT           "材料：",IDC_STATIC,434,16,27,9
+    GROUPBOX        "输入信息",IDC_STATIC,7,3,535,160
+    EDITTEXT        IDC_EDIT_MS,464,16,69,14,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
+    DEFPUSHBUTTON   "保存",IDSAVE,434,280,50,14
+    LTEXT           "接管数量(个)：",IDC_STATIC,14,71,57,9
+    EDITTEXT        IDC_EDIT_PNUM,80,71,67,12,ES_AUTOHSCROLL
+    CONTROL         "人孔",IDC_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,223,71,33,10
+    PUSHBUTTON      "计算",IDC_BUTTON2,492,167,50,14
+    CONTROL         "",IDC_LIST1,"SysListView32",LVS_REPORT | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,191,535,66
+    CONTROL         "",IDC_LIST2,"SysListView32",LVS_REPORT | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,86,535,71
+    GROUPBOX        "接管计算结果（单位：mm）",IDC_STATIC,7,180,535,95
+    COMBOBOX        IDC_COMBO_SIZE,305,70,76,55,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "尺寸：",IDC_STATIC_HS,275,71,27,8
+    COMBOBOX        IDC_COMBO_HOLE_M,456,70,75,50,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "材料：",IDC_STATIC_HM,419,71,27,8
+    LTEXT           "人孔名义厚度(mm)：",IDC_STATIC_HT,14,261,80,8,NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT_HT,99,262,57,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_VISIBLE | NOT WS_BORDER
+    LTEXT           "人孔最小伸入长度：",IDC_STATIC_HINL,212,261,83,8,NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT_HINL,299,262,63,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_VISIBLE | NOT WS_BORDER
+    LTEXT           "人孔最小伸出长度：",IDC_STATIC_HOUTL,400,261,83,8,NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT_HOUTL,487,262,44,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_VISIBLE | NOT WS_BORDER
+    CONTROL         "",IDC_LIST_ENTRY,"SysListView32",LVS_REPORT | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,43,535,22
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 0,0,0,1
+ PRODUCTVERSION 0,0,1,2
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080403a8"
+        BEGIN
+            VALUE "CompanyName", "TODO: <公司名>"
+            VALUE "FileDescription", "TODO: <文件说明>"
+            VALUE "FileVersion", "0.0.0.1"
+            VALUE "InternalName", "空气储罐计算器.exe"
+            VALUE "LegalCopyright", "TODO: (C) <公司名>。保留所有权利。"
+            VALUE "OriginalFilename", "空气储罐计算器.exe"
+            VALUE "ProductName", "空气储罐计算器"
+            VALUE "ProductVersion", "0.0.1.3"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 936
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 163
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 55
+    END
+
+    IDD_CONTAINER_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 542
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 294
+    END
+
+    IDD_2ND_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 542
+        VERTGUIDE, 318
+        VERTGUIDE, 542
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 294
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_ABOUTBOX            "关于 空气储罐计算器(&A)..."
+END
+
+#endif    // 中文(中华人民共和国) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+LANGUAGE 4, 2
+#pragma code_page(936)
+#include "res\container2.rc2"  // 非 Microsoft Visual C++ 编辑的资源
+#include "l.CHS\afxres.rc"      // 标准组件
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
