@@ -143,7 +143,7 @@ void CContainerModel::calcContainerByDiWalk(float thickMax, float thickMin)
 			}				
 		}
 		bool filtRet = TRUE;
-		filtRet = pContainerInfo->conResultFilter(h, Di);
+		filtRet = pContainerInfo->conResultFilter(L, Di);
 		if (filtRet == FALSE) {
 			continue;
 		}
@@ -255,13 +255,16 @@ checkReturn_t CContainerModel::checkConDiISOK(float L, float h, float Di, float 
 	float limit = 0;
 	if (m_conType == CONTAINER_TYPE_GENERAL) {
 		limit = (m_conMetarial == S30408) ? 2 : 3;
-
+		if (((Delta_1n - m_C_1 - m_C_2) < limit) || ((Delta_2n - m_C_1 - m_C_2) < limit)){
+			return CHECK_FAIL_2;
+		}
 	} else if (m_conType == CONTAINER_TYPE_SIMPLE) {
 		limit = (m_conMetarial == S30408) ? 1 : 2;
+		if (((Delta_1n - m_C_1) < limit) || ((Delta_2n - m_C_1) < limit)){
+			return CHECK_FAIL_2;
+		}
 	}
-	if (((Delta_1n - m_C_2) < limit) || ((Delta_2n - m_C_2) < limit)){
-		return CHECK_FAIL_2;
-	}
+
 
 
 	if ((Delta_2n - m_C_2 - m_C_1) < 0.15/100*Di) {

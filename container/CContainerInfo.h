@@ -20,10 +20,10 @@ typedef struct conConfig_s {
 	float thickStep;
 	float DiStep;
 	conInstallType_t installType;
-	float heightMin;
-	float heightMax;
-	float heightDiRateMin;
-	float heightDiRateMax;
+	float lengthMin;
+	float lengthMax;
+	float lengthDiRateMin;
+	float lengthDiRateMax;
 	unsigned int outputNum;
 } conConfig_t;
 
@@ -85,10 +85,10 @@ private:
 	containerType_t m_conType;
 	conInstallType_t m_conInstType;
 	unsigned int m_outputNum;
-	float m_heightMin;
-	float m_heightMax;
-	float m_heightDiRateMin;
-	float m_heightDiRateMax;
+	float m_lengthMin;
+	float m_lengthMax;
+	float m_lengthDiRateMin;
+	float m_lengthDiRateMax;
 	float m_thickNegWindage;
 
 };

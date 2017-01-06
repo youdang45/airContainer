@@ -303,7 +303,7 @@ bool CHoleModel::calcHole()
 	}
 
 	maxThick = gb->getPlateMaxThick(conMetarial);
-	for (float delet_nr = m_delet_nr; delet_nr <= maxThick; delet_nr += m_thickStep) {
+	for (float delet_nr = m_delet_nr; delet_nr <= maxThick; delet_nr += 0.1) {
 		calcLenght(delet_nr);
 		float Br = calcWidth(delet_nr);
 
@@ -339,11 +339,6 @@ bool CHoleModel::calcHole()
 	} else {
 		return FALSE;
 	}	
-}
-
-void CHoleModel::setThickStep(float s)
-{
-	m_thickStep = s;
 }
 
 bool CHoleModel::initThick()

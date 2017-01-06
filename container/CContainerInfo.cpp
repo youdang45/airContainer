@@ -12,7 +12,7 @@ bool containerSort(conCaclResultItem_t &s1, conCaclResultItem_t &s2)
 CContainerInfo::CContainerInfo()
 {
 	m_select = 0;
-	m_heightMax = 0;
+	m_lengthMax = 0;
 	m_configed = FALSE;
 }
 
@@ -40,11 +40,10 @@ bool CContainerInfo::setContainerConfig(conConfig_t &config)
 	m_cauterization = config.cauterization;
 	m_conInstType = config.installType;
 	m_outputNum = config.outputNum;
-	m_heightMin = config.heightMin;   
-	m_heightMax = config.heightMax;
-	m_heightDiRateMin = config.heightDiRateMin;
-	m_heightDiRateMax = config.heightDiRateMax;
-
+	m_lengthMin = config.lengthMin;   
+	m_lengthMax = config.lengthMax;
+	m_lengthDiRateMin = config.lengthDiRateMin;
+	m_lengthDiRateMax = config.lengthDiRateMax;
 	m_configed = TRUE;
 
 	return TRUE;
@@ -125,18 +124,18 @@ void CContainerInfo::reset()
 	m_configed = FALSE;
 }
 
-bool CContainerInfo::conResultFilter(float height, float Di)
+bool CContainerInfo::conResultFilter(float length, float Di)
 {
-	if (m_heightMax > 0.00001) {
-		if ((height > m_heightMax) || (height < m_heightMin)) {
+	if (m_lengthMax > 0.00001) {
+		if ((length > m_lengthMax) || (length < m_lengthMin)) {
 			return FALSE;
 		}
 	}
 
 	float rate = 0;
-	rate = height / Di;
+	rate = length / Di;
 
-	if ((rate > m_heightDiRateMax) || (rate < m_heightDiRateMin)) {
+	if ((rate > m_lengthDiRateMax) || (rate < m_lengthDiRateMin)) {
 		return FALSE;
 	}
 
@@ -353,7 +352,7 @@ bool simpleConInputIsValid(float pressure,
 		return FALSE;
 	}
 
-	if (temperature < -20 || temperature > 150) {
+	if (temperature < -20.0 || temperature > 150.0) {
 		return FALSE;
 	}
 

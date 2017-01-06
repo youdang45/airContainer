@@ -53,7 +53,6 @@ public:
 	~CHoleModel();
 	static CHoleModel * GetInstance();
 	bool calcHole();
-	void setThickStep(float s);
 
 private:
 	CHoleModel();

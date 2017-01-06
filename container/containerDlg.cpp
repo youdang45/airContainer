@@ -326,10 +326,10 @@ void Ccontainer2Dlg::OnBnClickedConCacl()
 	float DiStep = 0;           //内径计算步长
 	conInstallType_t installType = CON_INST_TYPE_INVALID;
 	conConfig_t config;
-	float heightMin = 0;
-	float heightMax = 0;
-	float heightDiRateMin = 0;
-	float heightDiRateMax = 0;
+	float lengthMin = 0;
+	float lengthMax = 0;
+	float lengthDiRateMin = 0;
+	float lengthDiRateMax = 0;
 	unsigned int outputNum = 0;
 	CString str;	
 	bool checkRet = TRUE;
@@ -368,16 +368,16 @@ void Ccontainer2Dlg::OnBnClickedConCacl()
 	installType = getConInstallTypeByStr(str);
 
 	GetDlgItemText(IDC_EDIT_HEIGHT_MIN, str);
-	heightMin = atof(str);
+	lengthMin = atof(str);
 
 	GetDlgItemText(IDC_EDIT_HEIGHT_MAX, str);
-	heightMax = atof(str);
+	lengthMax = atof(str);
 
 	GetDlgItemText(IDC_EDIT_LDR_MIN, str);
-	heightDiRateMin = atof(str);
+	lengthDiRateMin = atof(str);
 
 	GetDlgItemText(IDC_EDIT_HDR_MAX, str);
-	heightDiRateMax = atof(str);
+	lengthDiRateMax = atof(str);
 	
 	GetDlgItemText(IDC_EDIT_OUTPUT_NUM, str);
 	outputNum = atoi(str);
@@ -404,13 +404,13 @@ void Ccontainer2Dlg::OnBnClickedConCacl()
 	config.conMetarial = conMetarial; 
 	config.thickNegWindage = thickNegWindage;
 	config.cauterization = cauterization; 
-	config.thickStep = thickStep; 
+	config.thickStep = thickStep;  //To be updated
 	config.DiStep = DiStep; 
 	config.installType = installType; 
-	config.heightMin = heightMin; 
-	config.heightMax = heightMax; 
-	config.heightDiRateMin = heightDiRateMin;
-	config.heightDiRateMax = heightDiRateMax;
+	config.lengthMin = lengthMin; 
+	config.lengthMax = lengthMax; 
+	config.lengthDiRateMin = lengthDiRateMin;
+	config.lengthDiRateMax = lengthDiRateMax;
 	config.outputNum = outputNum; 
 
 	containerInfo->setContainerConfig(config);
@@ -420,7 +420,6 @@ void Ccontainer2Dlg::OnBnClickedConCacl()
 
 	//To be updated
 	CHoleModel * p_holeModel = CHoleModel::GetInstance();
-	p_holeModel->setThickStep(thickStep);
 
 	p_conModel->calcContainer();
 
