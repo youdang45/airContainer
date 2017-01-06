@@ -12,7 +12,7 @@ const float CPipeModel::m_Phi_t = 1;
 
 CPipeModel::CPipeModel()
 {
-	m_C_1 = 0.3;
+	m_C_1 = 0;
 	m_C_2 = 0;
 }
 
@@ -66,6 +66,7 @@ bool CPipeModel::calcPerPipe(pipeConfig_t &pipeConf)
 	pconInfo->getContainerConfig(config);
 	m_P = config.pressure;
 	temp = config.temperature;
+	m_C_1 = config.thickNegWindage;
 	m_C_2 = config.cauterization; 
 	m_Di = selectedContainer.diameterIn;//筒体内径
 	m_Sigma_T = selectedContainer.selectedStress;
@@ -286,6 +287,7 @@ bool CHoleModel::calcHole()
 	conMetarial = config.conMetarial;
 	temp = config.temperature;
 	m_Phi = config.coefficient;
+	m_C_1 = config.thickNegWindage;
 	m_C_2 = config.cauterization;
 	m_Di = selectedContainer.diameterIn;//筒体内径
 	m_Sigma_T = selectedContainer.selectedStress;

@@ -36,6 +36,7 @@
 #define IDC_CHECK1                      1010
 #define IDC_CHECK                       1010
 #define IDC_BUTTON2                     1011
+#define IDC_CACL                        1011
 #define IDC_LIST1                       1012
 #define IDC_LIST2                       1013
 #define IDC_COMBO_HOLE_M                1014
@@ -64,7 +65,7 @@
 #define IDC_EDIT_CREATEID               1030
 #define IDC_LAST_PAGE                   1031
 #define IDC_COMBO_IT                    1032
-#define IDC_COMBO_STEP                  1033
+#define IDC_COMBO_RB                    1033
 #define IDC_EDIT_HDR_MIN                1034
 #define IDC_EDIT_LDR_MIN                1034
 #define IDC_EDIT_OUTPUT_NUM             1035

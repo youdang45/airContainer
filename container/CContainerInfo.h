@@ -6,8 +6,6 @@
 #include "CExlHeader.h"
 #include "CContainerModel.h"
 
-#define OUTPUT_FILE "´¢¹Þ¼ÆËã½á¹û.xlsx"
-
 typedef struct conConfig_s {
 	containerType_t conType;
 	float volume;
@@ -17,7 +15,6 @@ typedef struct conConfig_s {
 	SteelNumber_t conMetarial;
 	float thickNegWindage;
 	float cauterization;
-	float thickStep;
 	float DiStep;
 	conInstallType_t installType;
 	float lengthMin;
@@ -59,7 +56,7 @@ public:
 	unsigned int getOutputNum();
 	bool conResultFilter(float height, float Di);
 	void reset();
-	bool save();
+	bool save(CString file);
 
 private:
 	void closeExlApp();

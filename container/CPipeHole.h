@@ -66,7 +66,7 @@ public:
 	list <pipeCalcResult_t> &getPipeCalcResults();
 	holeCalcResult_t & getHoleCalcResult();
 	void reset();
-	bool save();
+	bool save(CString file);
 
 private:
 	CPipeHole();

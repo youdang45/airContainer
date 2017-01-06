@@ -31,6 +31,7 @@ public:
 	~CContainerModel();
 	bool calcContainer();
 	void setDiStep(int s);
+	void setRoundedBase(float b);
 
 private:
 	CContainerModel();
@@ -72,6 +73,7 @@ private:
 	float m_ReL;                 //屈服强度
 	int m_DiStep;                //内径计算步长
 	conInstallType_t m_instType; //安装方式:立式、卧式
+	float m_roundedBase;
 };
 
 extern CString containerTypeStr[];

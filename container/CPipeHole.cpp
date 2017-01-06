@@ -94,23 +94,16 @@ void CPipeHole::reset()
 	memset(&m_holeResult, 0, sizeof(m_holeResult));
 }
 
-bool CPipeHole::save()
+bool CPipeHole::save(CString file)
 {
 	bool ret = FALSE;
 	CContainerInfo *containerInfo = CContainerInfo::GetInstance();
 	conConfig_t config;
 	conCaclResultItem_t &conItem = containerInfo->getSelectItem();
-	CString file;
 	CString str;
 	CRange rangeTmp;
 	int i = 1;
 	CString row, left, right;
-
-	TCHAR chpath[100] = {0}; 
-	GetModuleFileName(NULL, chpath,sizeof(chpath));
-	(strrchr(chpath, _T('\\')))[1] = 0;
-	file = chpath;
-	file += PH_OUTPUT_FILE;
 
 	COleException pe;
     if (!m_ecApp.CreateDispatch(_T("Excel.Application"), &pe))  
@@ -121,6 +114,7 @@ bool CPipeHole::save()
         return FALSE;  
     }
 	m_ecApp.put_AlertBeforeOverwriting(FALSE);
+	m_ecApp.put_DisplayAlerts(FALSE);
 
 	m_ecBooks = m_ecApp.get_Workbooks();  
     if (!m_ecBooks.m_lpDispatch)   
@@ -216,11 +210,11 @@ bool CPipeHole::save()
 	m_range.put_Item(COleVariant((long)i),COleVariant((long)4),COleVariant(str));
 	str.Format(_T("%.2f"), conItem.capThick);
 	m_range.put_Item(COleVariant((long)i),COleVariant((long)5),COleVariant(str));
-	str.Format(_T("%.2f"), conItem.weight);
+	str.Format(_T("%.2f"), conItem.capHight);
 	m_range.put_Item(COleVariant((long)i),COleVariant((long)6),COleVariant(str));
 	str.Format(_T("%.2f"), conItem.totalHight);
 	m_range.put_Item(COleVariant((long)i),COleVariant((long)7),COleVariant(str));
-	str.Format(_T("%.2f"), conItem.capHight);
+	str.Format(_T("%.2f"), conItem.weight);
 	m_range.put_Item(COleVariant((long)i),COleVariant((long)8),COleVariant(str));
 
 

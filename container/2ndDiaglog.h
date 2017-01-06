@@ -37,7 +37,7 @@ public:
 	afx_msg void OnEnChangeEditPnum();
 	afx_msg void OnClickListEntry(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnClickList2(NMHDR *pNMHDR, LRESULT *pResult);
-	afx_msg void OnBnClickedButton2();
+	afx_msg void OnBnClickedCacl();
 
 private:
 	void setResultEntry();

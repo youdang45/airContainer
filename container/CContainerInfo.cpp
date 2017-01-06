@@ -62,6 +62,9 @@ bool CContainerInfo::getContainerConfig(conConfig_t &config)
 	config.temperature = m_temperature;
 	config.coefficient = m_coefficient;
 	config.cauterization = m_cauterization;
+	config.installType = m_conInstType;
+	config.thickNegWindage = m_thickNegWindage;
+
 
 	return TRUE;
 }
@@ -142,17 +145,10 @@ bool CContainerInfo::conResultFilter(float length, float Di)
 	return TRUE;
 }
 
-bool CContainerInfo::save()
+bool CContainerInfo::save(CString file)
 {
 	bool ret = FALSE;
-	CString file;
 	CString str;
-
-	TCHAR chpath[100] = {0}; 
-	GetModuleFileName(NULL, chpath,sizeof(chpath));
-	(strrchr(chpath, _T('\\')))[1] = 0;
-	file = chpath;
-	file += OUTPUT_FILE;
 
 	COleException pe;  
     if (!m_ecApp.CreateDispatch(_T("Excel.Application"), &pe))  
@@ -163,6 +159,7 @@ bool CContainerInfo::save()
         return FALSE;  
     }
 	m_ecApp.put_AlertBeforeOverwriting(FALSE);
+	m_ecApp.put_DisplayAlerts(FALSE);
 
 	m_ecBooks = m_ecApp.get_Workbooks();  
     if (!m_ecBooks.m_lpDispatch)   
@@ -236,7 +233,7 @@ bool CContainerInfo::save()
 
 
 
-	range = m_ecSheet.get_Range(COleVariant(_T("A6")),COleVariant(_T("G6")));
+	range = m_ecSheet.get_Range(COleVariant(_T("A6")),COleVariant(_T("H6")));
 	range.Merge(VOptional);
 	m_range.put_Item(COleVariant((long)6),COleVariant((long)1),COleVariant(_T("容器计算结果:")));
     m_range.put_Item(COleVariant((long)7),COleVariant((long)1),COleVariant(_T("序号")));
@@ -244,8 +241,9 @@ bool CContainerInfo::save()
     m_range.put_Item(COleVariant((long)7),COleVariant((long)3),COleVariant(_T("筒体壁厚（mm）")));
     m_range.put_Item(COleVariant((long)7),COleVariant((long)4),COleVariant(_T("筒体高度（mm）")));
     m_range.put_Item(COleVariant((long)7),COleVariant((long)5),COleVariant(_T("封头壁厚（mm）")));
-    m_range.put_Item(COleVariant((long)7),COleVariant((long)6),COleVariant(_T("壳体总高（mm）")));
-    m_range.put_Item(COleVariant((long)7),COleVariant((long)7),COleVariant(_T("壳体重量（kg）")));
+	m_range.put_Item(COleVariant((long)7),COleVariant((long)6),COleVariant(_T("封头直边高度（mm）")));
+    m_range.put_Item(COleVariant((long)7),COleVariant((long)7),COleVariant(_T("壳体总高（mm）")));
+    m_range.put_Item(COleVariant((long)7),COleVariant((long)8),COleVariant(_T("壳体重量（kg）")));
 
 	int i = 8;
 	for (list <conCaclResultItem_t>::iterator iter = m_conCaclResults.begin();
@@ -261,10 +259,12 @@ bool CContainerInfo::save()
 		m_range.put_Item(COleVariant((long)i),COleVariant((long)4),COleVariant(str));
 		str.Format(_T("%.2f"), iter->capThick);
 		m_range.put_Item(COleVariant((long)i),COleVariant((long)5),COleVariant(str));
-		str.Format(_T("%.2f"), iter->totalHight);
+		str.Format(_T("%.2f"), iter->capHight);
 		m_range.put_Item(COleVariant((long)i),COleVariant((long)6),COleVariant(str));
-		str.Format(_T("%.2f"), iter->weight);
+		str.Format(_T("%.2f"), iter->totalHight);
 		m_range.put_Item(COleVariant((long)i),COleVariant((long)7),COleVariant(str));
+		str.Format(_T("%.2f"), iter->weight);
+		m_range.put_Item(COleVariant((long)i),COleVariant((long)8),COleVariant(str));
 
 		i++;
 	}

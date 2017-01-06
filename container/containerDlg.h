@@ -65,7 +65,7 @@ public:
 	// 安装形式
 	CComboBox m_installType;
 	// 钢板壁厚步长
-	CComboBox m_thickStep;
+	CComboBox m_roundedBase;
 	// 最小高度
 	CEdit m_heightMin;
 	// 最大高度

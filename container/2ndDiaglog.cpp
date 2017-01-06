@@ -61,7 +61,7 @@ BEGIN_MESSAGE_MAP(C2ndDiaglog, CDialog)
 	ON_CBN_KILLFOCUS(IDC_COMBOX_CREATEID, &C2ndDiaglog::OnKillfocusCcomboBox)
 
 	ON_NOTIFY(NM_CLICK, IDC_LIST2, &C2ndDiaglog::OnClickList2)
-	ON_BN_CLICKED(IDC_BUTTON2, &C2ndDiaglog::OnBnClickedButton2)
+	ON_BN_CLICKED(IDC_CACL, &C2ndDiaglog::OnBnClickedCacl)
 	ON_BN_CLICKED(IDSAVE, &C2ndDiaglog::OnBnClickedSave)
 END_MESSAGE_MAP()
 
@@ -247,15 +247,14 @@ void C2ndDiaglog::setConResultEntry()
 	str.Format(_T("%.2f"), conItem.capThick);
 	m_resultEntry.SetItemText(0, 4, str);
 
-	str.Format(_T("%.2f"), conItem.weight);
-	m_resultEntry.SetItemText(0, 5, str);
+	str.Format(_T("%.2f"), conItem.capHight);
+	m_resultEntry.SetItemText(0, 7, str);
 
 	str.Format(_T("%.2f"), conItem.totalHight);
 	m_resultEntry.SetItemText(0, 6, str);
 
-	str.Format(_T("%.2f"), conItem.capHight);
-	m_resultEntry.SetItemText(0, 7, str);
-
+	str.Format(_T("%.2f"), conItem.weight);
+	m_resultEntry.SetItemText(0, 5, str);
 }
 
 //对计算表格进行初始
@@ -813,7 +812,7 @@ void C2ndDiaglog::OnClickList2(NMHDR *pNMHDR, LRESULT *pResult)
 	*pResult = 0;
 }
 
-void C2ndDiaglog::OnBnClickedButton2()
+void C2ndDiaglog::OnBnClickedCacl()
 {
 	bool hole_ret = FALSE;
 	CPipeHole *pPipeHole = CPipeHole::GetInstance();
@@ -855,8 +854,12 @@ void C2ndDiaglog::getSavePipeConfig(){
 		str = m_connectConfig.GetItemText(i, 3);
 		pipeConfig.Do =  atof(str);
 
-		str = m_connectConfig.GetItemText(i, 4);
-		pipeConfig.thick =  atof(str);
+		if (pipeConfig.isAddStress) {
+			str = m_connectConfig.GetItemText(i, 4);
+			pipeConfig.thick =  atof(str);
+		} else {
+			pipeConfig.thick = 0;
+		}
 
 		str = m_connectConfig.GetItemText(i, 5);
 		pipeConfig.extendIn = (str == _T("是"));
@@ -951,7 +954,14 @@ void C2ndDiaglog::showHoleCalcResult()
 
 void C2ndDiaglog::OnBnClickedSave()
 {
+	CString fileName;
+	CFileDialog fileDlg(FALSE, "xlsx", "接管人孔计算结果", 
+						OFN_OVERWRITEPROMPT, "Excel 工作簿(*.xlsx)", this);
+	if ( fileDlg.DoModal() == IDOK ) {
+		fileName = fileDlg.GetPathName();
+	} 
+
 	CPipeHole *phInfo = CPipeHole::GetInstance();
 
-	phInfo->save();	
+	phInfo->save(fileName);	
 }

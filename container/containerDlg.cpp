@@ -68,7 +68,7 @@ void Ccontainer2Dlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO_C, m_coefCombo);
 	DDX_Control(pDX, IDC_COMBO_T, m_containerType);
 	DDX_Control(pDX, IDC_COMBO_IT, m_installType);
-	DDX_Control(pDX, IDC_COMBO_STEP, m_thickStep);
+	DDX_Control(pDX, IDC_COMBO_RB, m_roundedBase);
 	DDX_Control(pDX, IDC_EDIT_HEIGHT_MIN, m_heightMin);
 	DDX_Control(pDX, IDC_EDIT_HEIGHT_MAX, m_heightMax);
 	DDX_Control(pDX, IDC_EDIT_HDR_MIN, m_heightDiRateMin);
@@ -261,8 +261,8 @@ void Ccontainer2Dlg::initCombo()
 	m_installType.AddString(_T(conInstallTypeStr[CON_INST_TYPE_UPRIGHT]));
 	m_installType.AddString(_T(conInstallTypeStr[CON_INST_TYPE_HORIZANTAL]));
 
-	m_thickStep.AddString(_T("0.5"));
-	m_thickStep.AddString(_T("0.25"));
+	m_roundedBase.AddString(_T("0.5"));
+	m_roundedBase.AddString(_T("0.25"));
 
 }
 
@@ -277,6 +277,10 @@ void Ccontainer2Dlg::OnBnClickedPipeCacl()
 	CString str;
 	CContainerInfo *containerInfo;
 	POSITION ps = m_resultList.GetFirstSelectedItemPosition();
+	if (ps == NULL) {
+		MessageBox("请选择一行储罐参数!");
+		return;
+	}
 	int selectLine = m_resultList.GetNextSelectedItem(ps);
 	str = m_resultList.GetItemText(selectLine, 0);
 	containerInfo = CContainerInfo::GetInstance();
@@ -322,7 +326,7 @@ void Ccontainer2Dlg::OnBnClickedConCacl()
 	SteelNumber_t conMetarial = SteelNumberNone;  //筒体材料
 	float thickNegWindage = 0;  //厚度负偏差
 	float cauterization = 0;    //腐蚀裕量
-	float thickStep = 0;        //壁厚步长
+	float roundedBase = 0;        //壁厚步长
 	float DiStep = 0;           //内径计算步长
 	conInstallType_t installType = CON_INST_TYPE_INVALID;
 	conConfig_t config;
@@ -358,8 +362,8 @@ void Ccontainer2Dlg::OnBnClickedConCacl()
 	GetDlgItemText(IDC_EDIT_CA, str);
 	cauterization = atof(str);
 
-	GetDlgItemText(IDC_COMBO_STEP, str);
-	thickStep = atof(str);
+	GetDlgItemText(IDC_COMBO_RB, str);
+	roundedBase = atof(str);
 
 	GetDlgItemText(IDC_EDIT_STEP, str);
 	DiStep = atof(str);
@@ -404,7 +408,6 @@ void Ccontainer2Dlg::OnBnClickedConCacl()
 	config.conMetarial = conMetarial; 
 	config.thickNegWindage = thickNegWindage;
 	config.cauterization = cauterization; 
-	config.thickStep = thickStep;  //To be updated
 	config.DiStep = DiStep; 
 	config.installType = installType; 
 	config.lengthMin = lengthMin; 
@@ -417,6 +420,7 @@ void Ccontainer2Dlg::OnBnClickedConCacl()
 
 	CContainerModel * p_conModel = CContainerModel::GetInstance();
 	p_conModel->setDiStep(DiStep);
+	p_conModel->setRoundedBase(roundedBase);
 
 	//To be updated
 	CHoleModel * p_holeModel = CHoleModel::GetInstance();
@@ -511,7 +515,7 @@ void Ccontainer2Dlg::setDefaultConfig()
 	m_coefCombo.SetCurSel(0);
 	m_containerType.SetCurSel(0);
 	m_installType.SetCurSel(0);
-	m_thickStep.SetCurSel(0);
+	m_roundedBase.SetCurSel(0);
 
 }
 
@@ -578,7 +582,14 @@ void Ccontainer2Dlg::OnCbnSelchangeComboM()
 
 void Ccontainer2Dlg::OnBnClickedSave()
 {
+	CString fileName;
+	CFileDialog fileDlg(FALSE, "xlsx", "储罐计算结果", 
+						OFN_OVERWRITEPROMPT, "Excel 工作簿(*.xlsx)", this);
+	if ( fileDlg.DoModal() == IDOK ) {
+		fileName = fileDlg.GetPathName();
+	}
+	
 	CContainerInfo *containerInfo = CContainerInfo::GetInstance();
 
-	containerInfo->save();
+	containerInfo->save(fileName);
 }

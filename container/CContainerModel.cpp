@@ -48,6 +48,7 @@ CContainerModel::CContainerModel()
 	m_C_2 = 0;           
 	m_Rm = 0;            
 	m_ReL = 0;
+	m_roundedBase = 0;
 	
 }
 
@@ -143,7 +144,7 @@ void CContainerModel::calcContainerByDiWalk(float thickMax, float thickMin)
 			}				
 		}
 		bool filtRet = TRUE;
-		filtRet = pContainerInfo->conResultFilter(L, Di);
+		filtRet = pContainerInfo->conResultFilter(L+Di/2, Di);
 		if (filtRet == FALSE) {
 			continue;
 		}
@@ -205,10 +206,10 @@ float CContainerModel::calcConDeletN(float delet)
 	float sum = 0;
 
 	sum = (delet + m_C_1 + m_C_2);
-	n = sum / 0.5;
-	ret = sum - n * 0.5;
+	n = sum / m_roundedBase;
+	ret = sum - n * m_roundedBase;
 	if (ret) {
-		return (n + 1)*0.5;
+		return (n + 1)*m_roundedBase;
 	} else {
 		return sum;
 	}
@@ -221,10 +222,10 @@ float CContainerModel::calcCapDeletN(float delta)
 	float sum = 0;
 
 	sum = 1.12 * (delta + m_C_1) + m_C_2;
-	n = sum / 0.5;
-	ret = sum - n * 0.5;
+	n = sum / m_roundedBase;
+	ret = sum - n * m_roundedBase;
 	if (ret) {
-		return (n + 1)*0.5;
+		return (n + 1)*m_roundedBase;
 	} else {
 		return sum;
 	}
@@ -296,4 +297,9 @@ checkReturn_t CContainerModel::checkConDiISOK(float L, float h, float Di, float 
 void CContainerModel::setDiStep(int s)
 {
 	m_DiStep = s;
+}
+
+void CContainerModel::setRoundedBase(float b)
+{
+	m_roundedBase = b;
 }
