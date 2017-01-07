@@ -15,9 +15,9 @@ holeInDiameter_t holeSize[] =
 
 CString holeSizeStr[] = 
 {
-	"Invalid",
-	"280*380",
-	"300*400"
+	_T("Invalid"),
+	_T("280*380"),
+	_T("300*400")
 };
 pipeCalcResult_t::pipeCalcResult_t ()
 {
@@ -142,7 +142,7 @@ bool CPipeHole::save(CString file)
 	m_ecSheet = m_ecSheets.get_Item(COleVariant(sndSheet));  
     if(!m_ecSheet.m_lpDispatch)   
     {  
-        AfxMessageBox("WorkSheet为空!", MB_OK|MB_ICONWARNING);  
+        AfxMessageBox(_T("WorkSheet为空!"), MB_OK|MB_ICONWARNING);  
         return FALSE;  
     }
 	m_ecSheet.put_Name(_T("储罐人孔计算结果"));
@@ -151,7 +151,7 @@ bool CPipeHole::save(CString file)
 	m_range = m_ecSheet.get_Cells();
     if(!m_range.m_lpDispatch)   
     {  
-        AfxMessageBox("range为空!", MB_OK|MB_ICONWARNING);  
+        AfxMessageBox(_T("range为空!"), MB_OK|MB_ICONWARNING);  
         return FALSE;  
     }
 
@@ -341,7 +341,7 @@ bool CPipeHole::save(CString file)
 
 	closeExlApp();
 
-	AfxMessageBox("接管人孔计算结果保存成功!", MB_OK|MB_ICONINFORMATION);  
+	AfxMessageBox(_T("接管人孔计算结果保存成功!"), MB_OK|MB_ICONINFORMATION);  
 
 	return TRUE;
 }
@@ -369,9 +369,9 @@ void CPipeHole::closeExlApp()
 }
 holeSize_t getHoleSizeByStr(CString str)
 {
-	if (str == "280*380") {
+	if (str == _T("280*380")) {
 		return ES_280_380;
-	} else if (str == "300*400") {
+	} else if (str == _T("300*400")) {
 		return ES_300_400;
 	} else {
 		return ES_INVALID;

@@ -255,11 +255,11 @@ void Ccontainer2Dlg::initCombo()
 	m_coefCombo.AddString(_T("0.85"));
 	m_coefCombo.AddString(_T("1.00"));
 
-	m_containerType.AddString(_T(containerTypeStr[CONTAINER_TYPE_GENERAL]));
-	m_containerType.AddString(_T(containerTypeStr[CONTAINER_TYPE_SIMPLE]));
+	m_containerType.AddString(containerTypeStr[CONTAINER_TYPE_GENERAL]);
+	m_containerType.AddString(containerTypeStr[CONTAINER_TYPE_SIMPLE]);
 
-	m_installType.AddString(_T(conInstallTypeStr[CON_INST_TYPE_UPRIGHT]));
-	m_installType.AddString(_T(conInstallTypeStr[CON_INST_TYPE_HORIZANTAL]));
+	m_installType.AddString(conInstallTypeStr[CON_INST_TYPE_UPRIGHT]);
+	m_installType.AddString(conInstallTypeStr[CON_INST_TYPE_HORIZANTAL]);
 
 	m_roundedBase.AddString(_T("0.5"));
 	m_roundedBase.AddString(_T("0.25"));
@@ -278,7 +278,7 @@ void Ccontainer2Dlg::OnBnClickedPipeCacl()
 	CContainerInfo *containerInfo;
 	POSITION ps = m_resultList.GetFirstSelectedItemPosition();
 	if (ps == NULL) {
-		MessageBox("请选择一行储罐参数!");
+		MessageBox(_T("请选择一行储罐参数!"));
 		return;
 	}
 	int selectLine = m_resultList.GetNextSelectedItem(ps);
@@ -342,60 +342,60 @@ void Ccontainer2Dlg::OnBnClickedConCacl()
 	conType = getContainerTypeByStr(str);
 
 	GetDlgItemText(IDC_EDIT_V, str);
-	volume =  atof(str);
+	volume =  _wtof(str);
 
 	GetDlgItemText(IDC_EDIT_P, str);
-	pressure =  atof(str);
+	pressure =  _wtof(str);
 
 	GetDlgItemText(IDC_EDIT_T, str);
 	temperature = _ttoi(str);
 
 	GetDlgItemText(IDC_COMBO_C, str);
-	coefficient = atof(str);
+	coefficient = _wtof(str);
 
 	m_materialCombo.GetLBText(m_materialCombo.GetCurSel(),str);
 	conMetarial = getSteelNumberByName(str);
 
 	GetDlgItemText(IDC_EDIT_TNW, str);
-	thickNegWindage = atof(str);
+	thickNegWindage = _wtof(str);
 
 	GetDlgItemText(IDC_EDIT_CA, str);
-	cauterization = atof(str);
+	cauterization = _wtof(str);
 
 	GetDlgItemText(IDC_COMBO_RB, str);
-	roundedBase = atof(str);
+	roundedBase = _wtof(str);
 
 	GetDlgItemText(IDC_EDIT_STEP, str);
-	DiStep = atof(str);
+	DiStep = _wtof(str);
 
 	GetDlgItemText(IDC_COMBO_IT, str);
 	installType = getConInstallTypeByStr(str);
 
 	GetDlgItemText(IDC_EDIT_HEIGHT_MIN, str);
-	lengthMin = atof(str);
+	lengthMin = _wtof(str);
 
 	GetDlgItemText(IDC_EDIT_HEIGHT_MAX, str);
-	lengthMax = atof(str);
+	lengthMax = _wtof(str);
 
 	GetDlgItemText(IDC_EDIT_LDR_MIN, str);
-	lengthDiRateMin = atof(str);
+	lengthDiRateMin = _wtof(str);
 
 	GetDlgItemText(IDC_EDIT_HDR_MAX, str);
-	lengthDiRateMax = atof(str);
+	lengthDiRateMax = _wtof(str);
 	
 	GetDlgItemText(IDC_EDIT_OUTPUT_NUM, str);
-	outputNum = atoi(str);
+	outputNum = _wtoi(str);
 
 	if (conType == CONTAINER_TYPE_SIMPLE) {
 		checkRet = simpleConInputIsValid(pressure, volume, temperature);
 		if (FALSE == checkRet) {
-			MessageBox("简单容器的输入参数有误!");
+			MessageBox(_T("简单容器的输入参数有误!"));
 			return;
 		}
 	} else {
 		if ((conMetarial == Q235B) &&
 			(temperature < 20 || temperature > 300 || pressure > 1.6)){
-			MessageBox("Q235B输入计算压力或设计温度有误!");
+			MessageBox(_T("Q235B输入计算压力或设计温度有误!"));
 			return;
 		}
 	}
@@ -583,8 +583,8 @@ void Ccontainer2Dlg::OnCbnSelchangeComboM()
 void Ccontainer2Dlg::OnBnClickedSave()
 {
 	CString fileName;
-	CFileDialog fileDlg(FALSE, "xlsx", "储罐计算结果", 
-						OFN_OVERWRITEPROMPT, "Excel 工作簿(*.xlsx)", this);
+	CFileDialog fileDlg(FALSE, (LPCTSTR)_T("xlsx"), (LPCTSTR)_T("储罐计算结果"), 
+						OFN_OVERWRITEPROMPT, (LPCTSTR)_T("Excel 工作簿(*.xlsx)"), this);
 	if ( fileDlg.DoModal() == IDOK ) {
 		fileName = fileDlg.GetPathName();
 	}

@@ -1,6 +1,5 @@
 // 从类型库向导中用“添加类”创建的计算机生成的 IDispatch 包装类
 
-#import "C:\\Program Files (x86)\\Office2007\\EXCEL.EXE" no_namespace
 // CApplication 包装类
 
 class CApplication : public COleDispatchDriver

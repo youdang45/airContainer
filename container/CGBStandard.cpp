@@ -125,7 +125,7 @@ CGBStandard::CGBStandard()
 {
 	TCHAR chpath[100] = {0}; 
 	GetModuleFileName(NULL, chpath,sizeof(chpath));
-	(strrchr(chpath, _T('\\')))[1] = 0;
+	(_tcsrchr(chpath, '\\'))[1] = 0;
 	m_stdFile = chpath;
 	m_stdFile += GB_STANDARD_FILE;
 }
@@ -160,6 +160,7 @@ bool CGBStandard::LoadGBStandard()
         throw &pe;  
         return FALSE;  
     }
+
 	m_ecBooks = m_ecApp.get_Workbooks();  
     if (!m_ecBooks.m_lpDispatch)   
     {  
@@ -173,6 +174,7 @@ bool CGBStandard::LoadGBStandard()
 						  VOptional, VOptional, VOptional, VOptional,
 						  VOptional, VOptional, VOptional, VOptional,
 						  VOptional, VOptional);  
+
 	if(!m_ecBook.m_lpDispatch)   
     {  
         AfxMessageBox(_T("WorkSheet»ñÈ¡Ê§°Ü!"), MB_OK|MB_ICONWARNING);  
@@ -190,15 +192,15 @@ bool CGBStandard::LoadGBStandard()
 	{
 		m_ecSheet = m_ecSheets.get_Item(COleVariant(i));
 		sheetName = m_ecSheet.get_Name();
-		if (sheetName == "¸Ö°å") {
+		if (sheetName == _T("¸Ö°å")) {
 			//
 			ret = LoadPlateStd(m_ecSheet);
-		} else if (sheetName == "¸Ö¹Ü") {
+		} else if (sheetName == _T("¸Ö¹Ü")) {
 			ret = LoadPipeStd(m_ecSheet);
 		}
 
 		if (FALSE == ret){
-			//Add Error Info
+			AfxMessageBox(_T("¼ÓÔØ¹ú±êÎÄ¼þÊ§°Ü!"), MB_OK|MB_ICONWARNING); 
 			return FALSE;
 		}
 
@@ -238,7 +240,7 @@ bool CGBStandard::LoadPlateStd(CWorksheet &ecSheet)
 		if (value.vt == VT_BSTR){
 			CString vStr;
 			vStr =  value.bstrVal;
-			if (vStr == "¸ÖºÅ") {
+			if (vStr == _T("¸ÖºÅ")) {
 			    i++;
 			    continue;
 			}
@@ -348,7 +350,7 @@ bool CGBStandard::LoadPipeStd(CWorksheet &ecSheet)
 		if (value.vt == VT_BSTR){
 			CString vStr;
 			vStr =  value.bstrVal;
-			if (vStr == "¸ÖºÅ") {
+			if (vStr == _T("¸ÖºÅ")) {
 			    i++;
 			    continue;
 			}
@@ -620,15 +622,15 @@ bool getThickScopeFromString(CString str, float &min, float &max)
 
 	if (!splitFound) {
 		strNumMax = strNumMin;
-		strNumMin = "0";
+		strNumMin = _T("0");
 	}
-	if ((strNumMin == "") || (strNumMax == "")) {
+	if ((strNumMin == _T("")) || (strNumMax == _T(""))) {
 		//Add Error Log
 		return FALSE;
 	}
 
-	min =  atof(strNumMin);
-	max =  atof(strNumMax);
+	min =  _wtof(strNumMin);
+	max =  _wtof(strNumMax);
 
 	return TRUE;
 }

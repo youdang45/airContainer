@@ -187,22 +187,21 @@ bool CContainerInfo::save(CString file)
 	m_ecSheet = m_ecSheets.get_Item(COleVariant(firstSheet));  
     if(!m_ecSheet.m_lpDispatch)   
     {  
-        AfxMessageBox("WorkSheet为空!", MB_OK|MB_ICONWARNING);  
+        AfxMessageBox(_T("WorkSheet为空!"), MB_OK|MB_ICONWARNING);  
         return FALSE;  
     }
 	m_ecSheet.put_Name(_T("储罐计算结果"));
 
-	CRange range = m_ecSheet.get_Range(COleVariant(_T("A1")),COleVariant(_T("I1")));
-	range.Merge(VOptional);
-
 	m_range = m_ecSheet.get_Cells();
     if(!m_range.m_lpDispatch)   
     {  
-        AfxMessageBox("m_range为空!", MB_OK|MB_ICONWARNING);  
+        AfxMessageBox(_T("m_range为空!"), MB_OK|MB_ICONWARNING);  
         return FALSE;  
     }
 
 	//填写配置信息
+	CRange range = m_ecSheet.get_Range(COleVariant(_T("A1")),COleVariant(_T("I1")));
+	range.Merge(VOptional);
 	m_range.put_Item(COleVariant((long)1),COleVariant((long)1),COleVariant(_T("容器配置信息:")));
 
 	m_range.put_Item(COleVariant((long)2),COleVariant((long)1),COleVariant(_T("容器类型")));
@@ -215,7 +214,7 @@ bool CContainerInfo::save(CString file)
 	m_range.put_Item(COleVariant((long)2),COleVariant((long)8),COleVariant(_T("腐蚀裕量(mm)")));
 	m_range.put_Item(COleVariant((long)2),COleVariant((long)9),COleVariant(_T("安装形式")));
 
-	m_range.put_Item(COleVariant((long)3),COleVariant((long)1),COleVariant(_T(containerTypeStr[m_conType])));
+	m_range.put_Item(COleVariant((long)3),COleVariant((long)1),COleVariant(containerTypeStr[m_conType]));
 	str.Format(_T("%.2f"), m_volume);
 	m_range.put_Item(COleVariant((long)3),COleVariant((long)2),COleVariant(str));
 	str.Format(_T("%.2f"), m_pressure);
@@ -224,18 +223,19 @@ bool CContainerInfo::save(CString file)
 	m_range.put_Item(COleVariant((long)3),COleVariant((long)4),COleVariant(str)); 
 	str.Format(_T("%.2f"), m_coefficient);
 	m_range.put_Item(COleVariant((long)3),COleVariant((long)5),COleVariant(str));	 
-	m_range.put_Item(COleVariant((long)3),COleVariant((long)6),COleVariant(_T(steelNumStrMap[m_conMetarial].steelNumName)));
+	m_range.put_Item(COleVariant((long)3),COleVariant((long)6),COleVariant(steelNumStrMap[m_conMetarial].steelNumName));
 	str.Format(_T("%.2f"), m_thickNegWindage);
 	m_range.put_Item(COleVariant((long)3),COleVariant((long)7),COleVariant(str));
 	str.Format(_T("%.2f"), m_cauterization);
 	m_range.put_Item(COleVariant((long)3),COleVariant((long)8),COleVariant(str));
-	m_range.put_Item(COleVariant((long)3),COleVariant((long)9),COleVariant(_T(conInstallTypeStr[m_conInstType])));	
+	m_range.put_Item(COleVariant((long)3),COleVariant((long)9),COleVariant(conInstallTypeStr[m_conInstType]));	
 
 
 
 	range = m_ecSheet.get_Range(COleVariant(_T("A6")),COleVariant(_T("H6")));
 	range.Merge(VOptional);
 	m_range.put_Item(COleVariant((long)6),COleVariant((long)1),COleVariant(_T("容器计算结果:")));
+
     m_range.put_Item(COleVariant((long)7),COleVariant((long)1),COleVariant(_T("序号")));
 	m_range.put_Item(COleVariant((long)7),COleVariant((long)2),COleVariant(_T("筒体内径（mm）")));
     m_range.put_Item(COleVariant((long)7),COleVariant((long)3),COleVariant(_T("筒体壁厚（mm）")));
@@ -289,7 +289,7 @@ bool CContainerInfo::save(CString file)
 
 	closeExlApp();
 
-	AfxMessageBox("储罐计算结果保存成功!", MB_OK|MB_ICONINFORMATION);  
+	AfxMessageBox(_T("储罐计算结果保存成功!"), MB_OK|MB_ICONINFORMATION);  
 
 	return TRUE;
 }

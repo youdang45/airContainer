@@ -17,7 +17,7 @@
 // C2ndDiaglog 对话框
 void floatToStr(float v, CString & str) {
 	if(-0.000001<v && v<0.000001) {
-		str = "0";
+		str = _T("0");
 	} else {
 		str.Format(_T("%.2f"), v);
 	}
@@ -641,10 +641,10 @@ void C2ndDiaglog::destroyCcombobox(CListCtrl *list, CComboBox* combo, int &Item,
 		if (SubItem == 1){
 			CString strTmp;
 			if (str == _T("否")){
-				strTmp = "\\";
+				strTmp = _T("\\");
 				list->SetItemText(Item, 4, strTmp);
 			} else {
-				strTmp = "";
+				strTmp = _T("");
 				list->SetItemText(Item, 4, strTmp);
 			}
 		}
@@ -852,11 +852,11 @@ void C2ndDiaglog::getSavePipeConfig(){
 		pipeConfig.material = getSteelNumberByName(str);
 
 		str = m_connectConfig.GetItemText(i, 3);
-		pipeConfig.Do =  atof(str);
+		pipeConfig.Do =  _wtof(str);
 
 		if (pipeConfig.isAddStress) {
 			str = m_connectConfig.GetItemText(i, 4);
-			pipeConfig.thick =  atof(str);
+			pipeConfig.thick =  _wtof(str);
 		} else {
 			pipeConfig.thick = 0;
 		}
@@ -955,8 +955,8 @@ void C2ndDiaglog::showHoleCalcResult()
 void C2ndDiaglog::OnBnClickedSave()
 {
 	CString fileName;
-	CFileDialog fileDlg(FALSE, "xlsx", "接管人孔计算结果", 
-						OFN_OVERWRITEPROMPT, "Excel 工作簿(*.xlsx)", this);
+	CFileDialog fileDlg(FALSE, (LPCTSTR)_T("xlsx"), (LPCTSTR)_T("接管人孔计算结果"), 
+						OFN_OVERWRITEPROMPT, (LPCTSTR)_T("Excel 工作簿(*.xlsx)"), this);
 	if ( fileDlg.DoModal() == IDOK ) {
 		fileName = fileDlg.GetPathName();
 	} 

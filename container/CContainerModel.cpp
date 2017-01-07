@@ -5,16 +5,16 @@
 
 
 CString containerTypeStr[CONTAINER_TYPE_MAX] = {
-	"Invalid",
-	"压力容器",
-	"简单压力容器"
+	_T("Invalid"),
+	_T("压力容器"),
+	_T("简单压力容器")
 };
 
 
 CString conInstallTypeStr[CON_INST_TYPE_MAX] = {
-	"Invalid",
-	"立式",
-	"卧式"
+	_T("Invalid"),
+	_T("立式"),
+	_T("卧式")
 };
 
 const float CContainerModel::m_Pi = 3.14;
