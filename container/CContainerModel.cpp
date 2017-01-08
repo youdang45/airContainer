@@ -136,7 +136,15 @@ void CContainerModel::calcContainerByDiWalk(float thickMax, float thickMin)
 			case CHECK_FAIL_1:
 				return;
 			case CHECK_FAIL_2:
-				continue;
+				calcPotentialThick(L, Di,Delta_1n,Delta_2n,Delta_1n,Delta_2n);
+				checkPass = checkConDiISOK(L, h, Di, Delta_1n, Delta_2n, thickMax, thickMin);
+				if (checkPass == CHECK_FAIL_1) {
+					continue;
+				} else if (checkPass == CHECK_PASS) {
+					Delta_1n = rounded(Delta_1n);
+					Delta_2n = rounded(Delta_2n);
+					break;
+				}
 			default:
 			{
 				//check passed
@@ -199,6 +207,20 @@ float CContainerModel::calcWeight(float l, float h, float Di, float Delta_1n, fl
 	return (part1 + 2*m_Rho*m_Pi*Delta_2n*part2*pow(10.0, -9));
 }
 
+float CContainerModel::rounded(float f)
+{
+	float ret = 0;
+	int n = 0;
+
+	n = f / m_roundedBase;
+	ret = f - n * m_roundedBase;
+	if (ret) {
+		return (n + 1)*m_roundedBase;
+	} else {
+		return f;
+	}
+}
+
 float CContainerModel::calcConDeletN(float delet)
 {
 	float ret = 0;
@@ -206,14 +228,9 @@ float CContainerModel::calcConDeletN(float delet)
 	float sum = 0;
 
 	sum = (delet + m_C_1 + m_C_2);
-	n = sum / m_roundedBase;
-	ret = sum - n * m_roundedBase;
-	if (ret) {
-		return (n + 1)*m_roundedBase;
-	} else {
-		return sum;
-	}
+	return rounded(sum);
 }
+
 
 float CContainerModel::calcCapDeletN(float delta)
 {
@@ -222,13 +239,8 @@ float CContainerModel::calcCapDeletN(float delta)
 	float sum = 0;
 
 	sum = 1.12 * (delta + m_C_1) + m_C_2;
-	n = sum / m_roundedBase;
-	ret = sum - n * m_roundedBase;
-	if (ret) {
-		return (n + 1)*m_roundedBase;
-	} else {
-		return sum;
-	}
+	return rounded(sum);
+
 }
 
 checkReturn_t CContainerModel::checkConDiISOK(float L, float h, float Di, float Delta_1n,
@@ -266,8 +278,6 @@ checkReturn_t CContainerModel::checkConDiISOK(float L, float h, float Di, float 
 		}
 	}
 
-
-
 	if ((Delta_2n - m_C_2 - m_C_1) < 0.15/100*Di) {
 		return CHECK_FAIL_2;
 	}
@@ -294,6 +304,64 @@ checkReturn_t CContainerModel::checkConDiISOK(float L, float h, float Di, float 
 	return CHECK_PASS;
 }
 
+bool CContainerModel::calcPotentialThick(float L,
+										 float Di,
+										 float Delta_1n,
+						                 float Delta_2n,
+						                 float &Delta_1n_out,
+						                 float &Delta_2n_out)
+{
+
+	float limit = 0;
+	float d_1n = 0, d_2n = 0;
+
+	if (m_conType == CONTAINER_TYPE_GENERAL) {
+		limit = (m_conMetarial == S30408) ? 2 : 3;
+		if (((Delta_1n - m_C_1 - m_C_2) < limit)){
+			d_1n = limit + m_C_1 + m_C_2;
+		}
+		if (((Delta_2n - m_C_1 - m_C_2) < limit)){
+			d_2n = limit + m_C_1 + m_C_2;
+		}
+	} else if (m_conType == CONTAINER_TYPE_SIMPLE) {
+		limit = (m_conMetarial == S30408) ? 1 : 2;
+		if ((Delta_1n - m_C_1) < limit){
+			d_1n = limit + m_C_1;
+		}
+		if ((Delta_2n - m_C_1) < limit){
+			d_2n = limit + m_C_1;
+		}
+	}
+
+	if ((d_2n - m_C_2 - m_C_1) < 0.15/100*Di) {
+		d_2n = m_C_1 + m_C_2 + 0.15/100*Di;
+	}
+
+	float testPress = 0;
+	float assumedPress = 0;
+	float value = 0;
+	float tmp1 = 0, tmp2 = 0;
+
+	testPress = 1.25 * m_P * m_Sigma / m_Sigma_T;
+	if (m_instType == CON_INST_TYPE_UPRIGHT) {
+		assumedPress = (L + Di/2 + d_2n + 200) * m_Rho_w * 9.8 * pow(10.0, -9);
+	} else if (m_instType == CON_INST_TYPE_HORIZANTAL){
+		assumedPress = (Di + d_2n + 200) * m_Rho_w * 9.8 * pow(10.0, -9);
+	}
+	tmp1 = Di + d_1n - m_C_1 - m_C_2;
+	tmp2 = d_1n - m_C_1 - m_C_2;
+	float p = testPress+assumedPress;
+	value = p*tmp1/(2*tmp2*m_Phi);
+
+	if (value > (0.9 * m_ReL)) {
+		d_1n  = (p * (Di - m_C_1 - m_C_2) + 0.9 * m_ReL * 2 * m_Phi * (m_C_1 - m_C_2)) / (0.9 * m_ReL * 2 * m_Phi -p);
+	}
+
+	Delta_1n_out = d_1n;
+	Delta_2n_out = d_2n;
+
+	return TRUE;
+}
 void CContainerModel::setDiStep(int s)
 {
 	m_DiStep = s;

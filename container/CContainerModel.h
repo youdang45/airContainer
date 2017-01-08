@@ -49,6 +49,9 @@ private:
 	checkReturn_t checkConDiISOK(float L, float h, float Di, float Delta_1_n,
 		                         float Delta_2_n, float thickMax, float thickMin);
 	float calcWeight(float l, float h, float Di, float Delta_1n, float Delta_2n);
+	bool calcPotentialThick(float L, float Di, float Delta_1n, float Delta_2n,
+						    float &Delta_1n_out, float &Delta_2n_out);
+	float rounded(float f);
 
 
 private:
