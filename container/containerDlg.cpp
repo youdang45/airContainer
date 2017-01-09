@@ -584,12 +584,12 @@ void Ccontainer2Dlg::OnBnClickedSave()
 {
 	CString fileName;
 	CFileDialog fileDlg(FALSE, (LPCTSTR)_T("xlsx"), (LPCTSTR)_T("储罐计算结果"), 
-						OFN_OVERWRITEPROMPT, (LPCTSTR)_T("Excel 工作簿(*.xlsx)"), this);
+		OFN_OVERWRITEPROMPT, (LPCTSTR)_T("Excel Workbook(*.xlsx)"), this);
+
 	if ( fileDlg.DoModal() == IDOK ) {
 		fileName = fileDlg.GetPathName();
+		CContainerInfo *containerInfo = CContainerInfo::GetInstance();
+		containerInfo->save(fileName);
 	}
-	
-	CContainerInfo *containerInfo = CContainerInfo::GetInstance();
 
-	containerInfo->save(fileName);
 }

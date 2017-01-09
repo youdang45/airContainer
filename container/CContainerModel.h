@@ -8,6 +8,7 @@ typedef enum checkReturn_e {
 	CHECK_PASS = 0,
 	CHECK_FAIL_1,
 	CHECK_FAIL_2,
+	CHECK_FAIL_3,
 } checkReturn_t;
 
 typedef enum containterType_e {

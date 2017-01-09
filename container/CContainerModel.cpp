@@ -145,6 +145,8 @@ void CContainerModel::calcContainerByDiWalk(float thickMax, float thickMin)
 					Delta_2n = rounded(Delta_2n);
 					break;
 				}
+			case CHECK_FAIL_3:
+				continue;
 			default:
 			{
 				//check passed
@@ -262,7 +264,7 @@ checkReturn_t CContainerModel::checkConDiISOK(float L, float h, float Di, float 
 	}
 
 	if (L < 2*h) {
-		return CHECK_FAIL_2;
+		return CHECK_FAIL_3;
 	}
 
 	float limit = 0;
@@ -357,8 +359,12 @@ bool CContainerModel::calcPotentialThick(float L,
 		d_1n  = (p * (Di - m_C_1 - m_C_2) + 0.9 * m_ReL * 2 * m_Phi * (m_C_1 - m_C_2)) / (0.9 * m_ReL * 2 * m_Phi -p);
 	}
 
-	Delta_1n_out = d_1n;
-	Delta_2n_out = d_2n;
+	if (d_1n > 0.000001) {
+		Delta_1n_out = d_1n;
+	}
+	if (d_2n > 0.000001) {
+		Delta_2n_out = d_2n;
+	}
 
 	return TRUE;
 }

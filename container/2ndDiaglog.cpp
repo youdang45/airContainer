@@ -956,12 +956,10 @@ void C2ndDiaglog::OnBnClickedSave()
 {
 	CString fileName;
 	CFileDialog fileDlg(FALSE, (LPCTSTR)_T("xlsx"), (LPCTSTR)_T("接管人孔计算结果"), 
-						OFN_OVERWRITEPROMPT, (LPCTSTR)_T("Excel 工作簿(*.xlsx)"), this);
+					OFN_OVERWRITEPROMPT, (LPCTSTR)_T("Excel Workbook(*.xlsx)"), this);
 	if ( fileDlg.DoModal() == IDOK ) {
 		fileName = fileDlg.GetPathName();
+		CPipeHole *phInfo = CPipeHole::GetInstance();
+		phInfo->save(fileName);
 	} 
-
-	CPipeHole *phInfo = CPipeHole::GetInstance();
-
-	phInfo->save(fileName);	
 }

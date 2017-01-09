@@ -253,11 +253,11 @@ bool CContainerInfo::save(CString file)
 		m_range.put_Item(COleVariant((long)i),COleVariant((long)1),COleVariant(str));
 		str.Format(_T("%.2f"), iter->diameterIn);
 		m_range.put_Item(COleVariant((long)i),COleVariant((long)2),COleVariant(str));
-		str.Format(_T("%.2f"), iter->conThick);
+		str.Format(_T("%.2f(%.2f)"), iter->conThick, iter->conCalcThick);
 		m_range.put_Item(COleVariant((long)i),COleVariant((long)3),COleVariant(str));
 		str.Format(_T("%.2f"), iter->conHight);
 		m_range.put_Item(COleVariant((long)i),COleVariant((long)4),COleVariant(str));
-		str.Format(_T("%.2f"), iter->capThick);
+		str.Format(_T("%.2f(%.2f)"), iter->capThick, iter->capCalcThick);
 		m_range.put_Item(COleVariant((long)i),COleVariant((long)5),COleVariant(str));
 		str.Format(_T("%.2f"), iter->capHight);
 		m_range.put_Item(COleVariant((long)i),COleVariant((long)6),COleVariant(str));
