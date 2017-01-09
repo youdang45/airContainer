@@ -137,12 +137,12 @@ void CContainerModel::calcContainerByDiWalk(float thickMax, float thickMin)
 				return;
 			case CHECK_FAIL_2:
 				calcPotentialThick(L, Di,Delta_1n,Delta_2n,Delta_1n,Delta_2n);
+				Delta_1n = rounded(Delta_1n);
+				Delta_2n = rounded(Delta_2n);
 				checkPass = checkConDiISOK(L, h, Di, Delta_1n, Delta_2n, thickMax, thickMin);
 				if (checkPass == CHECK_FAIL_1) {
 					continue;
 				} else if (checkPass == CHECK_PASS) {
-					Delta_1n = rounded(Delta_1n);
-					Delta_2n = rounded(Delta_2n);
 					break;
 				}
 			case CHECK_FAIL_3:
@@ -313,7 +313,6 @@ bool CContainerModel::calcPotentialThick(float L,
 						                 float &Delta_1n_out,
 						                 float &Delta_2n_out)
 {
-
 	float limit = 0;
 	float d_1n = 0, d_2n = 0;
 
@@ -321,17 +320,25 @@ bool CContainerModel::calcPotentialThick(float L,
 		limit = (m_conMetarial == S30408) ? 2 : 3;
 		if (((Delta_1n - m_C_1 - m_C_2) < limit)){
 			d_1n = limit + m_C_1 + m_C_2;
+		} else {
+			d_1n = Delta_1n;
 		}
 		if (((Delta_2n - m_C_1 - m_C_2) < limit)){
 			d_2n = limit + m_C_1 + m_C_2;
+		} else {
+			d_2n = Delta_2n;
 		}
 	} else if (m_conType == CONTAINER_TYPE_SIMPLE) {
 		limit = (m_conMetarial == S30408) ? 1 : 2;
 		if ((Delta_1n - m_C_1) < limit){
 			d_1n = limit + m_C_1;
+		} else {
+			d_1n = Delta_1n;
 		}
 		if ((Delta_2n - m_C_1) < limit){
 			d_2n = limit + m_C_1;
+		}else {
+			d_2n = Delta_2n;
 		}
 	}
 
@@ -356,15 +363,11 @@ bool CContainerModel::calcPotentialThick(float L,
 	value = p*tmp1/(2*tmp2*m_Phi);
 
 	if (value > (0.9 * m_ReL)) {
-		d_1n  = (p * (Di - m_C_1 - m_C_2) + 0.9 * m_ReL * 2 * m_Phi * (m_C_1 - m_C_2)) / (0.9 * m_ReL * 2 * m_Phi -p);
+		d_1n  = (p * (Di - m_C_1 - m_C_2) + 0.9 * m_ReL * 2 * m_Phi * (m_C_1 + m_C_2)) / (0.9 * m_ReL * 2 * m_Phi -p);
 	}
 
-	if (d_1n > 0.000001) {
-		Delta_1n_out = d_1n;
-	}
-	if (d_2n > 0.000001) {
-		Delta_2n_out = d_2n;
-	}
+	Delta_1n_out = d_1n;
+	Delta_2n_out = d_2n;
 
 	return TRUE;
 }
