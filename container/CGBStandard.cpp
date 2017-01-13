@@ -94,7 +94,7 @@ bool CGBItemLine::getStressScope(SteelNumber_t  material,
 				stressScope.beginTemp = tempScopeMap2[i].min;
 				stressScope.endTemp = tempScopeMap2[i].max;
 				tempLevel2_t tempLevel = tempScopeMap2[i].level;
-				stressScope.beginStress = stress[tempLevel];
+				stressScope.beginStress = stress[tempLevel-1];
 				stressScope.endStress = stress[tempLevel];
 				return TRUE;
 			}
@@ -551,7 +551,7 @@ list <GBItem_t> CGBStandard::GetPipeItemList(SteelNumber_t &material)
 
 float calcSelectedStress(stressScope_t &sS, short temp)
 {
-	float rate = (sS.endTemp - temp )/(sS.endTemp - sS.beginTemp);
+	float rate = ((float)(sS.endTemp - temp ))/((float)(sS.endTemp - sS.beginTemp));
 	return (sS.endStress + rate*(sS.beginStress - sS.endStress));
 }
 

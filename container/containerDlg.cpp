@@ -509,7 +509,7 @@ void Ccontainer2Dlg::setDefaultConfig()
 	str.Format(_T("50"));
 	GetDlgItem(IDC_EDIT_OUTPUT_NUM)->SetWindowText(str);
 
-	str.Format(_T("20"));
+	str.Format(_T("10"));
 	GetDlgItem(IDC_EDIT_STEP)->SetWindowText(str);
 
 	m_coefCombo.SetCurSel(0);
@@ -541,19 +541,19 @@ void Ccontainer2Dlg::fillContainerResultList()
 		str.Format(_T("%.2f(%.2f)"), iter->conThick, iter->conCalcThick);
 		m_resultList.SetItemText(i, 2, str);
 
-		str.Format(_T("%.2f"), iter->conHight);
+		str.Format(_T("%d"), (int)iter->conHight);
 		m_resultList.SetItemText(i, 3, str);
 
 		str.Format(_T("%.2f(%.2f)"), iter->capThick, iter->capCalcThick);
 		m_resultList.SetItemText(i, 4, str);
 
-		str.Format(_T("%.2f"), iter->capHight);
+		str.Format(_T("%d"), (int)iter->capHight);
 		m_resultList.SetItemText(i, 5, str);
 
-		str.Format(_T("%.2f"), iter->totalHight);
+		str.Format(_T("%d"),(int) iter->totalHight);
 		m_resultList.SetItemText(i, 6, str);
 
-		str.Format(_T("%.2f"), iter->weight);
+		str.Format(_T("%d"), (int)iter->weight);
 		m_resultList.SetItemText(i, 7, str);
 
 	}
