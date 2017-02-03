@@ -583,8 +583,8 @@ void Ccontainer2Dlg::OnCbnSelchangeComboM()
 void Ccontainer2Dlg::OnBnClickedSave()
 {
 	CString fileName;
-	CFileDialog fileDlg(FALSE, (LPCTSTR)_T("xlsx"), (LPCTSTR)_T("储罐计算结果"), 
-		OFN_OVERWRITEPROMPT, (LPCTSTR)_T("Excel Workbook(*.xlsx)"), this);
+	CFileDialog fileDlg(FALSE, (LPCTSTR)_T("xls"), (LPCTSTR)_T("储罐计算结果"), 
+		OFN_OVERWRITEPROMPT, (LPCTSTR)_T("Excel Workbook(*.xls)"), this);
 
 	if ( fileDlg.DoModal() == IDOK ) {
 		fileName = fileDlg.GetPathName();

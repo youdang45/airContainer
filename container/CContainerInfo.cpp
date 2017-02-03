@@ -273,7 +273,7 @@ bool CContainerInfo::save(CString file)
 
     m_ecBook.SaveAs(  
         COleVariant(file),
-        COleVariant((long)51),//该参数使得保存的时候使用兼容模式，避免了使用excel2003打开的时候弹出提示框  
+        COleVariant((long)56),//该参数使得保存的时候使用兼容模式，避免了使用excel97打开的时候弹出提示框  
         VOptional,  
         VOptional,  
         VOptional,  
