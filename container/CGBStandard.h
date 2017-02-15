@@ -6,7 +6,7 @@
 
 using namespace std;
 
-#define GB_STANDARD_FILE _T("许用应力表.xlsx")
+#define GB_STANDARD_FILE _T("许用应力表.xls")
 
 typedef enum SteelNumber_e {
     SteelNumberNone = 0,
