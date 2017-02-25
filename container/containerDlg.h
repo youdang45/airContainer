@@ -7,6 +7,8 @@
 #include "CResults.h"
 #include "afxwin.h"
 
+#define CONTAINER_FILE_NAME _T("壳体计算结果")
+
 // Ccontainer2Dlg 对话框
 class Ccontainer2Dlg : public CDialog
 {
@@ -81,4 +83,5 @@ public:
 	CEdit m_thickNegWindage;
 	afx_msg void OnCbnSelchangeComboM();
 	afx_msg void OnBnClickedSave();
+	CString m_fileName;
 };

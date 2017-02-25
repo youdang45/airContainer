@@ -104,6 +104,8 @@ BOOL C2ndDiaglog::OnInitDialog()
 	initHoleSizeCombo();
 	initHoleMaterialCombo();
 	setContainerConfig();
+	m_fileName.Format(_T("%g立方_%g兆帕 %s"), m_volume, m_pressure, PIPE_HOLE_FILE_NAME);
+
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -431,12 +433,6 @@ void C2ndDiaglog::setContainerConfig()
 	CContainerInfo *containerInfo;
 	containerInfo = CContainerInfo::GetInstance();
 	conConfig_t config;
-	containerType_t conType = CONTAINER_TYPE_INVALID;
-	float volume = 0;
-	float pressure = 0;
-	SteelNumber_t conMetarial = SteelNumberNone;
-	short temperature = 0;
-	float coefficient = 0, cauterization = 0;
 	CString str;
 
 	ret = containerInfo->getContainerConfig(config);
@@ -460,6 +456,8 @@ void C2ndDiaglog::setContainerConfig()
 	str.Format(_T("%.2f"), config.coefficient);
 	GetDlgItem(IDC_EDIT_CS)->SetWindowText(str); 
 
+	m_volume = config.volume;
+	m_pressure = config.pressure;
 }
 
 void C2ndDiaglog::OnEnChangeEditPnum()
@@ -955,7 +953,7 @@ void C2ndDiaglog::showHoleCalcResult()
 void C2ndDiaglog::OnBnClickedSave()
 {
 	CString fileName;
-	CFileDialog fileDlg(FALSE, (LPCTSTR)_T("xls"), (LPCTSTR)_T("接管人孔计算结果"), 
+	CFileDialog fileDlg(FALSE, (LPCTSTR)_T("xls"), (LPCTSTR)m_fileName, 
 					OFN_OVERWRITEPROMPT, (LPCTSTR)_T("Excel Workbook(*.xls)"), this);
 	if ( fileDlg.DoModal() == IDOK ) {
 		fileName = fileDlg.GetPathName();

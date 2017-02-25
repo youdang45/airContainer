@@ -6,6 +6,8 @@
 #include "afxwin.h"
 
 
+#define PIPE_HOLE_FILE_NAME _T("接管人孔计算结果")
+
 // C2ndDiaglog 对话框
 class C2ndDiaglog : public CDialog
 {
@@ -96,6 +98,9 @@ private:
 	bool editCreated;
 	CComboBox m_comBox;
 	bool comboCreated;
+	CString m_fileName;
+	float m_volume;
+	float m_pressure;
 
 public:
 	bool m_exit;

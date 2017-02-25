@@ -44,14 +44,14 @@ private:
 	float calcTotalHight();
 	float calcCapHight();
 	float calcLength(float V, float Di);
-	void calcContainerByDiWalk(float thickMax, float thickMin);
+	void calcContainerByDiWalk(float thickMax, float thickMin, bool isFirstLine);
 	float calcConDeletN(float delet);
 	float calcCapDeletN(float delet);
 	checkReturn_t checkConDiISOK(float L, float h, float Di, float Delta_1_n,
-		                         float Delta_2_n, float thickMax, float thickMin);
+		                         float Delta_2_n, float thickMax, float thickMin, bool isFirstLine);
 	float calcWeight(float l, float h, float Di, float Delta_1n, float Delta_2n);
-	bool calcPotentialThick(float L, float Di, float Delta_1n, float Delta_2n,
-						    float &Delta_1n_out, float &Delta_2n_out);
+	bool calcPotentialThick(float L, float Di, float Delta_1n, float Delta_2n, float thickMin,
+							bool  isFirstLine, float &Delta_1n_out, float &Delta_2n_out);
 	float rounded(float f);
 
 

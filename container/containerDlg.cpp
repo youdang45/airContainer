@@ -263,6 +263,7 @@ void Ccontainer2Dlg::initCombo()
 
 	m_roundedBase.AddString(_T("0.5"));
 	m_roundedBase.AddString(_T("0.25"));
+	m_roundedBase.AddString(_T("0.1"));
 
 }
 
@@ -422,13 +423,10 @@ void Ccontainer2Dlg::OnBnClickedConCacl()
 	p_conModel->setDiStep(DiStep);
 	p_conModel->setRoundedBase(roundedBase);
 
-	//To be updated
-	CHoleModel * p_holeModel = CHoleModel::GetInstance();
-
 	p_conModel->calcContainer();
-
 	fillContainerResultList();
 
+	m_fileName.Format(_T("%g立方_%g兆帕 %s"), volume, pressure, CONTAINER_FILE_NAME);
 }
 
 void Ccontainer2Dlg::resetConfig()
@@ -583,7 +581,7 @@ void Ccontainer2Dlg::OnCbnSelchangeComboM()
 void Ccontainer2Dlg::OnBnClickedSave()
 {
 	CString fileName;
-	CFileDialog fileDlg(FALSE, (LPCTSTR)_T("xls"), (LPCTSTR)_T("储罐计算结果"), 
+	CFileDialog fileDlg(FALSE, (LPCTSTR)_T("xls"), (LPCTSTR)m_fileName, 
 		OFN_OVERWRITEPROMPT, (LPCTSTR)_T("Excel Workbook(*.xls)"), this);
 
 	if ( fileDlg.DoModal() == IDOK ) {

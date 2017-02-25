@@ -67,6 +67,7 @@ bool CContainerModel::calcContainer()
 	stressScope_t    stressScope;
 	float            phi = 0;
 	float            C_2 = 0;
+	bool             isFirstLine = TRUE;
 
 	ret = pContainerInfo->getContainerConfig(config);
 	m_V = config.volume;
@@ -101,12 +102,15 @@ bool CContainerModel::calcContainer()
 		m_Sigma = (*iter).getLowestTempStress();
 		m_Sigma_T = calcSelectedStress(stressScope, temp);
 
-		calcContainerByDiWalk((*iter).thicknessMax, (*iter).thicknessMin);
+		calcContainerByDiWalk((*iter).thicknessMax, (*iter).thicknessMin, isFirstLine);
+		if (isFirstLine) {
+			isFirstLine = FALSE;
+		}
 	}
 	pContainerInfo->sortContainerResultList();
 }	
 
-void CContainerModel::calcContainerByDiWalk(float thickMax, float thickMin)
+void CContainerModel::calcContainerByDiWalk(float thickMax, float thickMin, bool isFirstLine)
 {
 	conCaclResultItem_t conRestItem;
 	CContainerInfo * pContainerInfo = CContainerInfo::GetInstance();
@@ -131,15 +135,15 @@ void CContainerModel::calcContainerByDiWalk(float thickMax, float thickMin)
 		Delta_2 = m_P * Di / (2 * m_Sigma_T * m_Phi - 0.5 * m_P);
 		Delta_1n = calcConDeletN(Delta_1);
 		Delta_2n = calcCapDeletN(Delta_2);
-		checkPass = checkConDiISOK(L, h, Di, Delta_1n, Delta_2n, thickMax, thickMin);
+		checkPass = checkConDiISOK(L, h, Di, Delta_1n, Delta_2n, thickMax, thickMin, isFirstLine);
 		switch(checkPass) {
 			case CHECK_FAIL_1:
 				return;
 			case CHECK_FAIL_2:
-				calcPotentialThick(L, Di,Delta_1n,Delta_2n,Delta_1n,Delta_2n);
+				calcPotentialThick(L, Di,Delta_1n,Delta_2n, thickMin, isFirstLine, Delta_1n,Delta_2n);
 				Delta_1n = rounded(Delta_1n);
 				Delta_2n = rounded(Delta_2n);
-				checkPass = checkConDiISOK(L, h, Di, Delta_1n, Delta_2n, thickMax, thickMin);
+				checkPass = checkConDiISOK(L, h, Di, Delta_1n, Delta_2n, thickMax, thickMin, isFirstLine);
 				if (checkPass == CHECK_FAIL_1) {
 					continue;
 				} else if (checkPass == CHECK_PASS) {
@@ -246,7 +250,7 @@ float CContainerModel::calcCapDeletN(float delta)
 }
 
 checkReturn_t CContainerModel::checkConDiISOK(float L, float h, float Di, float Delta_1n,
-						                      float Delta_2n, float thickMax, float thickMin)
+						                      float Delta_2n, float thickMax, float thickMin, bool isFirstLine)
 {
 	if ((Delta_2n > thickMax) || (Delta_1n > thickMax)) {
 		return CHECK_FAIL_1;
@@ -259,8 +263,14 @@ checkReturn_t CContainerModel::checkConDiISOK(float L, float h, float Di, float 
 		return CHECK_FAIL_1;
 	}
 
-	if ((Delta_2n <= thickMin) || (Delta_1n <= thickMin)) {
-		return CHECK_FAIL_2;
+	if (isFirstLine) {
+		if ((Delta_2n < thickMin) || (Delta_1n < thickMin)) {
+			return CHECK_FAIL_2;
+		}
+	} else {
+		if ((Delta_2n <= thickMin) || (Delta_1n <= thickMin)) {
+			return CHECK_FAIL_2;
+		}
 	}
 
 	if (L < 2*h) {
@@ -310,6 +320,8 @@ bool CContainerModel::calcPotentialThick(float L,
 										 float Di,
 										 float Delta_1n,
 						                 float Delta_2n,
+										 float thickMin,
+										 bool  isFirstLine,
 						                 float &Delta_1n_out,
 						                 float &Delta_2n_out)
 {
@@ -364,6 +376,22 @@ bool CContainerModel::calcPotentialThick(float L,
 
 	if (value > (0.9 * m_ReL)) {
 		d_1n  = (p * (Di - m_C_1 - m_C_2) + 0.9 * m_ReL * 2 * m_Phi * (m_C_1 + m_C_2)) / (0.9 * m_ReL * 2 * m_Phi -p);
+	}
+
+	if (isFirstLine) {
+		if (d_1n < thickMin) {
+			d_1n = thickMin;
+		}
+		if (d_2n < thickMin) {
+			d_2n = thickMin;
+		}
+	} else {
+		if (d_1n <= thickMin) {
+			d_1n = thickMin + 0.001;
+		}
+		if (d_2n <= thickMin) {
+			d_2n = thickMin + 0.001;
+		}
 	}
 
 	Delta_1n_out = d_1n;
