@@ -523,12 +523,12 @@ void Ccontainer2Dlg::fillContainerResultList()
 	CContainerInfo *containerInfo;
 	containerInfo = CContainerInfo::GetInstance();
 
-	list <conCaclResultItem_t> & resultList = containerInfo->getContainerResultList();
+	list <ConCaclResultItem> & resultList = containerInfo->getContainerResultList();
 	unsigned int outputNum = containerInfo->getOutputNum();
 	int max_size = (resultList.size() > outputNum) ? outputNum : resultList.size();
 
 	int i = 0;
-	for (list<conCaclResultItem_t>::iterator iter = resultList.begin();
+	for (list<ConCaclResultItem>::iterator iter = resultList.begin();
 		i < max_size; i++, iter++) {
 		str.Format(_T("%d"), (i+1));
 		m_resultList.InsertItem(i, str);

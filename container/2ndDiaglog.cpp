@@ -230,7 +230,7 @@ void C2ndDiaglog::setConResultEntry()
 	containerInfo = CContainerInfo::GetInstance();
 
 
-	conCaclResultItem_t &conItem = containerInfo->getSelectItem();
+	ConCaclResultItem &conItem = containerInfo->getSelectItem();
 	int selectNo = containerInfo->getContainerSelectedNum();
 
 	CString str;
@@ -532,7 +532,7 @@ void C2ndDiaglog::OnClickListEntry(NMHDR *pNMHDR, LRESULT *pResult)
 				comboCreated = false;
 				createCcombobox(&m_resultEntry, pEditCtrl, &m_comBox, e_Item, e_SubItem, comboCreated);
 
-				list <conCaclResultItem_t> & resultList = containerInfo->getContainerResultList();
+				list <ConCaclResultItem> & resultList = containerInfo->getContainerResultList();
 				int max = (resultList.size() > 20) ? 20 : resultList.size();
 				for (int i = 0; i < max; i++) {
 					CString str;
@@ -552,7 +552,7 @@ void C2ndDiaglog::OnClickListEntry(NMHDR *pNMHDR, LRESULT *pResult)
 			e_SubItem = pEditCtrl->iSubItem;
 			createCcombobox(&m_resultEntry, pEditCtrl, &m_comBox, e_Item, e_SubItem, comboCreated);
 
-			list <conCaclResultItem_t> & resultList = containerInfo->getContainerResultList();
+			list <ConCaclResultItem> & resultList = containerInfo->getContainerResultList();
 			unsigned int outputNum = containerInfo->getOutputNum();
 			int max = (resultList.size() > outputNum) ? outputNum : resultList.size();
 			for (int i = 0; i < max; i++) {

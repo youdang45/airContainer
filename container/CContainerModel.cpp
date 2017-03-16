@@ -112,7 +112,7 @@ bool CContainerModel::calcContainer()
 
 void CContainerModel::calcContainerByDiWalk(float thickMax, float thickMin, bool isFirstLine)
 {
-	conCaclResultItem_t conRestItem;
+	ConCaclResultItem conRestItem;
 	CContainerInfo * pContainerInfo = CContainerInfo::GetInstance();
 	float Delta_1 = 0;         //筒体计算厚度
 	float Delta_1n = 0;        //筒体名义厚度
@@ -123,6 +123,7 @@ void CContainerModel::calcContainerByDiWalk(float thickMax, float thickMin, bool
 	float L = 0;               //圆筒长度
 	checkReturn_t checkPass = CHECK_PASS;
 	float weight = 0;
+	bool found = FALSE;
 
 	for(float Di = m_DiMin; Di < m_DiMax; Di += m_DiStep){
 		L = calcLength(m_V, Di);
@@ -178,7 +179,10 @@ void CContainerModel::calcContainerByDiWalk(float thickMax, float thickMin, bool
 		conRestItem.capHight = h;
 		conRestItem.selectedStress = m_Sigma_T;
 		conRestItem.conValidThick = Delta_1n - m_C_1 - m_C_2;
-		pContainerInfo->addContainerItem(&conRestItem);
+		found = pContainerInfo->findContainerItem(conRestItem);
+		if (!found) {
+			pContainerInfo->addContainerItem(&conRestItem);
+		}
 	}
 
 	return;

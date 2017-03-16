@@ -52,7 +52,7 @@ bool CPipeModel::calcPerPipe(pipeConfig_t &pipeConf)
 	pipeCalcResult_t result;
 	CGBStandard *gb = CGBStandard::GetInstance();
 	CContainerInfo *pconInfo = CContainerInfo::GetInstance();
-	conCaclResultItem_t &selectedContainer = pconInfo->getSelectItem();
+	ConCaclResultItem &selectedContainer = pconInfo->getSelectItem();
 	CPipeHole *pPipeHole = CPipeHole::GetInstance();
 	conConfig_t config;
 	short temp = 0;
@@ -274,7 +274,7 @@ bool CHoleModel::calcHole()
 	float minThick = 0, maxThick = 0;
 	CGBStandard *gb = CGBStandard::GetInstance();
 	CContainerInfo *pconInfo = CContainerInfo::GetInstance();
-	conCaclResultItem_t &selectedContainer = pconInfo->getSelectItem();
+	ConCaclResultItem &selectedContainer = pconInfo->getSelectItem();
 	CPipeHole *pPipeHole = CPipeHole::GetInstance();
 	
 	memset(&holeResult, 0, sizeof(holeResult));

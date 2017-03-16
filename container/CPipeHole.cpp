@@ -99,7 +99,7 @@ bool CPipeHole::save(CString file)
 	bool ret = FALSE;
 	CContainerInfo *containerInfo = CContainerInfo::GetInstance();
 	conConfig_t config;
-	conCaclResultItem_t &conItem = containerInfo->getSelectItem();
+	ConCaclResultItem &conItem = containerInfo->getSelectItem();
 	CString str;
 	CRange rangeTmp;
 	int i = 1;

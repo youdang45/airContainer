@@ -2,9 +2,14 @@
 #include <algorithm>
 #include "CContainerInfo.h"
 
+bool ConCaclResultItem::operator==(const ConCaclResultItem &item) const
+{
+	return (diameterIn == item.diameterIn);
+}
+
 CContainerInfo *CContainerInfo::m_pInstance = NULL;
 
-bool containerSort(conCaclResultItem_t &s1, conCaclResultItem_t &s2)
+bool containerSort(ConCaclResultItem &s1, ConCaclResultItem &s2)
 {
 	return s1.weight < s2.weight;
 }
@@ -69,7 +74,17 @@ bool CContainerInfo::getContainerConfig(conConfig_t &config)
 	return TRUE;
 }
 
-void CContainerInfo::addContainerItem(conCaclResultItem_t *item)
+bool CContainerInfo::findContainerItem(ConCaclResultItem &item)
+{
+	 list<ConCaclResultItem>::iterator it = find(m_conCaclResults.begin(), m_conCaclResults.end(), item);
+	 if (it != m_conCaclResults.end()) {
+		 return TRUE;
+	 } else {
+		return FALSE;
+	 }
+}
+
+void CContainerInfo::addContainerItem(ConCaclResultItem *item)
 {
 	m_conCaclResults.push_back(*item);
 }
@@ -79,7 +94,7 @@ void CContainerInfo::sortContainerResultList()
 	m_conCaclResults.sort(containerSort);
 }
 
-list <conCaclResultItem_t> & CContainerInfo::getContainerResultList()
+list <ConCaclResultItem> & CContainerInfo::getContainerResultList()
 {
 	return m_conCaclResults;
 }
@@ -94,9 +109,9 @@ int CContainerInfo::getContainerSelectedNum()
 	return m_select;
 }
 
-conCaclResultItem_t &CContainerInfo::getSelectItem()
+ConCaclResultItem &CContainerInfo::getSelectItem()
 {
-	list <conCaclResultItem_t>::iterator iter;
+	list <ConCaclResultItem>::iterator iter;
 
 	for (int i = 0; i < m_select; i++)
 	{
@@ -246,7 +261,7 @@ bool CContainerInfo::save(CString file)
     m_range.put_Item(COleVariant((long)7),COleVariant((long)8),COleVariant(_T("¿ÇÌåÖØÁ¿£¨kg£©")));
 
 	int i = 8;
-	for (list <conCaclResultItem_t>::iterator iter = m_conCaclResults.begin();
+	for (list <ConCaclResultItem>::iterator iter = m_conCaclResults.begin();
 		iter != m_conCaclResults.end(); iter++) {
 
 		str.Format(_T("%d"), (i-7));

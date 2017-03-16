@@ -25,7 +25,8 @@ typedef struct conConfig_s {
 } conConfig_t;
 
 
-typedef struct conCaclResultItem_s {
+class ConCaclResultItem {
+public:
 	float diameterIn;           //筒体内径
 	float conThick;             //筒壁厚度
 	float conCalcThick;         //筒体计算厚度
@@ -38,7 +39,9 @@ typedef struct conCaclResultItem_s {
 	float capHight;             //封头直边高度
 	float conValidThick;        //筒体有效厚度
 	float selectedStress;       //筒体设计温度下的许用应力
-}conCaclResultItem_t;
+	bool operator==(const ConCaclResultItem &item) const;
+
+};
 
 class CContainerInfo
 {
@@ -47,12 +50,13 @@ public:
     static CContainerInfo * GetInstance();
 	bool setContainerConfig(conConfig_t &config);
 	bool getContainerConfig(conConfig_t &config);
-	void addContainerItem(conCaclResultItem_t *item);
+	bool findContainerItem(ConCaclResultItem &item);
+	void addContainerItem(ConCaclResultItem *item);
 	void sortContainerResultList();
-	list <conCaclResultItem_t> & getContainerResultList();
+	list <ConCaclResultItem> & getContainerResultList();
 	void setContainerSelectedNum(int i);
 	int getContainerSelectedNum();
-	conCaclResultItem_t &getSelectItem();
+	ConCaclResultItem &getSelectItem();
 	unsigned int getOutputNum();
 	bool conResultFilter(float height, float Di);
 	void reset();
@@ -69,7 +73,7 @@ private:
 	SteelNumber_t m_conMetarial;  //筒体材料
 	unsigned short m_temperature; //设计温度
 	float m_coefficient;          //焊接系数
-	list <conCaclResultItem_t> m_conCaclResults;
+	list <ConCaclResultItem> m_conCaclResults;
 	int m_select;
 	bool m_configed;
 	CApplication m_ecApp;
