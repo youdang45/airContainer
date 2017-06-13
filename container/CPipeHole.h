@@ -31,6 +31,7 @@ typedef enum AddPressComment_s {
 
 struct pipeCalcResult_t{
 	float minThick;
+	float minDesignThick; //√˚“Â∫Ò∂»
 	float baseThick;
 	float minExtInHeight; //TBD: change height to length
 	float minExtOutHeight;

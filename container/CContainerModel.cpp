@@ -133,7 +133,7 @@ void CContainerModel::calcContainerByDiWalk(float thickMax, float thickMin, bool
 			h = 40;
 		}
 		Delta_1 = m_P * Di / (2 * m_Sigma_T * m_Phi - m_P);
-		Delta_2 = m_P * Di / (2 * m_Sigma_T * m_Phi - 0.5 * m_P);
+		Delta_2 = m_P * Di / (2 * m_Sigma_T - 0.5 * m_P);
 		Delta_1n = calcConDeletN(Delta_1);
 		Delta_2n = calcCapDeletN(Delta_2);
 		checkPass = checkConDiISOK(L, h, Di, Delta_1n, Delta_2n, thickMax, thickMin, isFirstLine);

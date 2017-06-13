@@ -16,8 +16,7 @@ private:
 	float calcDeletNT(float Delet_t);
 	float calcWidth(float delet_n);
 	void calcLenght(float Dop, float delet_n, bool isExtIn);
-	bool pipeSubCalc(pipeConfig_t &pipeConf, float Delet_nt,
-					GBStandardNumber_t gbNo, pipeCalcResult_t &result);
+	bool pipeSubCalc(pipeConfig_t &pipeConf, float Delet_nt, pipeCalcResult_t &result);
 	bool isDelet_ntValid(float Do, float delet_nt);
 
 private:

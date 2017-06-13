@@ -78,8 +78,6 @@ bool CPipeModel::calcPerPipe(pipeConfig_t &pipeConf)
 	for (list <GBItem_t>::iterator iter1 = gbList.begin();
 		iter1 != gbList.end(); iter1++)
 	{
-		GBStandardNumber_t gbNo = iter1->GBNo;
-
 		maxThick = getPipeMaxThick(*iter1);
 		for (list <CGBItemLine>::iterator iter2 = iter1->lineList.begin();
 			iter2 != iter1->lineList.end(); iter2++) {
@@ -106,14 +104,14 @@ bool CPipeModel::calcPerPipe(pipeConfig_t &pipeConf)
 					thick = pipeConf.thick;
 					result.baseThick = m_Delet_ntMin;
 				}
-				ret = pipeSubCalc(pipeConf, thick, gbNo, result);
+				ret = pipeSubCalc(pipeConf, thick, result);
 				if (ret == TRUE) {
 					found = TRUE;
 					break;
 				}
 			} else {
 				for (Delet_nt = m_Delet_ntMin; Delet_nt < maxThick; Delet_nt += 0.1){
-					ret = pipeSubCalc(pipeConf, Delet_nt, gbNo, result);
+					ret = pipeSubCalc(pipeConf, Delet_nt, result);
 					if (ret == TRUE) {
 						found = TRUE;
 						break;
@@ -130,16 +128,26 @@ bool CPipeModel::calcPerPipe(pipeConfig_t &pipeConf)
 }
 
 bool CPipeModel::pipeSubCalc(pipeConfig_t &pipeConf, float Delet_nt,
-							GBStandardNumber_t gbNo, pipeCalcResult_t &result)
+							    pipeCalcResult_t &result)
 {
 	float  Delet_et = 0;
+	float  Delet_mt = 0;
+	GBStandardNumber_t gbNo = GBStandardNoNone;
+	SteelNumber_t pipeMaterial = pipeConf.material;
 
 	m_Dop = pipeConf.Do - 2*(Delet_nt - m_C_2);
 	float B = calcWidth(Delet_nt);
 	calcLenght(m_Dop, Delet_nt, pipeConf.extendIn);
 	Delet_et = Delet_nt - m_C_2;
-
 	
+	if (S30408 == pipeMaterial) {
+		Delet_mt = (Delet_nt < 12.75) ? (Delet_nt/0.875) : (Delet_nt/0.85);
+		gbNo = GB_T_14976;
+	} else {
+		Delet_mt = (Delet_nt <= 8.5) ? (Delet_nt/0.85) : (Delet_nt/0.9);
+		gbNo = (Delet_nt <= 8.5) ? GB_T_8163 : GB_9948;
+	}
+
 	float rate = (m_sigma_Tt / m_Sigma_T);
 	float f_r = ( rate > 1.0 ) ? 1.0 : rate;
 	float A = m_Dop*m_Delta_1 + 2 * m_Delta_1 * Delet_et*(1-f_r);
@@ -150,6 +158,7 @@ bool CPipeModel::pipeSubCalc(pipeConfig_t &pipeConf, float Delet_nt,
 	if (Ae >= A) {
 		m_delet_nr = Delet_nt;
 		result.minThick = Delet_nt;
+		result.minDesignThick = Delet_mt;
 		float v = (m_Di/2.0 - sqrt(pow(m_Di, 2)/4 - pow(pipeConf.Do, 2)/4));
 		if (pipeConf.extendIn) {
 			result.minExtInHeight = (v > m_h_2) ? v : m_h_2;
@@ -173,6 +182,7 @@ bool CPipeModel::pipeSubCalc(pipeConfig_t &pipeConf, float Delet_nt,
 	} else {
 		if (pipeConf.isAddStress) {
 			result.minThick = Delet_nt;
+			result.minDesignThick = Delet_mt;
 			float v = (m_Di/2.0 - sqrt(pow(m_Di, 2)/4 - pow(pipeConf.Do, 2)/4));
 			if (pipeConf.extendIn) {
 				result.minExtInHeight = (v > m_h_2) ? v : m_h_2;
@@ -186,7 +196,7 @@ bool CPipeModel::pipeSubCalc(pipeConfig_t &pipeConf, float Delet_nt,
 			CString str = getGBStdNameByNum(gbNo);
 			result.GBStr += str;
 			result.minWidth = B/2.0 - pipeConf.Do / 2.0;
-			result.addPressThick = (A-Ae) / result.minWidth;
+			result.addPressThick = (A-Ae) / (2.0 * result.minWidth);
 			return TRUE;
 		}
 	}

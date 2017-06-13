@@ -332,7 +332,7 @@ void C2ndDiaglog::initConnectResultHeader()
     lvColumn.mask = LVCF_FMT | LVCF_TEXT | LVCF_WIDTH;
     lvColumn.fmt = LVCFMT_CENTER;
     lvColumn.cx = ConnResultWidth-60;
-	strText = _T("接管最小投料厚度");
+	strText = _T("接管名义厚度");
     lvColumn.pszText = (LPTSTR)(LPCTSTR)strText;
     this->m_connectResults.InsertColumn(1, &lvColumn);
 
@@ -893,12 +893,7 @@ void C2ndDiaglog::showPipeCalcResult()
 		str.Format(_T("%d"), (i+1));
 		m_connectResults.InsertItem(i, str);
 
-		floatToStr(iter->minThick, str);
-		if (iter->baseThick > 0.00001) {
-			CString str2;
-			str2.Format(_T("(%.2f)"), iter->baseThick);
-			str += str2;
-		}
+		floatToStr(iter->minDesignThick, str);
 		m_connectResults.SetItemText(i, 1, str);
 
 		floatToStr(iter->minExtInHeight, str);
