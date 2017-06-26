@@ -200,7 +200,7 @@ void C2ndDiaglog::initConResultEntryHeader()
 
     lvColumn.mask = LVCF_FMT | LVCF_TEXT | LVCF_WIDTH;
     lvColumn.fmt = LVCFMT_CENTER;
-    lvColumn.cx = UsualWidth;
+    lvColumn.cx = UsualWidth + 30;
     strText = _T("封头直边高度（mm）");
     lvColumn.pszText = (LPTSTR)(LPCTSTR)strText;
     this->m_resultEntry.InsertColumn(5, &lvColumn);
@@ -353,7 +353,7 @@ void C2ndDiaglog::initConnectResultHeader()
     lvColumn.mask = LVCF_FMT | LVCF_TEXT | LVCF_WIDTH;
     lvColumn.fmt = LVCFMT_CENTER;
     lvColumn.cx = ConnResultWidth + 20;
-    strText = _T("可选用标准号");
+    strText = _T("标准号");
     lvColumn.pszText = (LPTSTR)(LPCTSTR)strText;
     this->m_connectResults.InsertColumn(4, &lvColumn);
 
@@ -779,7 +779,6 @@ void C2ndDiaglog::OnClickList2(NMHDR *pNMHDR, LRESULT *pResult)
 				} else {
 					m_comBox.AddString(_T("10"));
 					m_comBox.AddString(_T("20"));
-					m_comBox.AddString(_T("16Mn"));
 					m_comBox.AddString(_T("S30408"));
 				}
 				m_comBox.ShowDropDown();
@@ -801,7 +800,6 @@ void C2ndDiaglog::OnClickList2(NMHDR *pNMHDR, LRESULT *pResult)
 			} else {
 				m_comBox.AddString(_T("10"));
 				m_comBox.AddString(_T("20"));
-				m_comBox.AddString(_T("16Mn"));
 				m_comBox.AddString(_T("S30408"));
 			}
 			m_comBox.ShowDropDown();//自动下拉

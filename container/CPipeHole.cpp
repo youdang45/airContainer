@@ -231,15 +231,14 @@ bool CPipeHole::save(CString file)
 	m_range.put_Item(COleVariant((long)i),COleVariant((long)2),COleVariant(_T("采用补强")));
     m_range.put_Item(COleVariant((long)i),COleVariant((long)3),COleVariant(_T("接管材质")));
     m_range.put_Item(COleVariant((long)i),COleVariant((long)4),COleVariant(_T("接管外径（mm）")));
-    m_range.put_Item(COleVariant((long)i),COleVariant((long)5),COleVariant(_T("接管投料厚度（mm）")));
-    m_range.put_Item(COleVariant((long)i),COleVariant((long)6),COleVariant(_T("允许内伸")));
-	m_range.put_Item(COleVariant((long)i),COleVariant((long)7),COleVariant(_T("接管最小投料厚度")));
-    m_range.put_Item(COleVariant((long)i),COleVariant((long)8),COleVariant(_T("接管最小内伸高度")));
-	m_range.put_Item(COleVariant((long)i),COleVariant((long)9),COleVariant(_T("接管最小外伸长度")));
-    m_range.put_Item(COleVariant((long)i),COleVariant((long)10),COleVariant(_T("可选用标准号")));
-    m_range.put_Item(COleVariant((long)i),COleVariant((long)11),COleVariant(_T("补强最小宽度")));
-    m_range.put_Item(COleVariant((long)i),COleVariant((long)12),COleVariant(_T("补强圈最小厚度")));
-	m_range.put_Item(COleVariant((long)i),COleVariant((long)13),COleVariant(_T("备注")));
+    m_range.put_Item(COleVariant((long)i),COleVariant((long)5),COleVariant(_T("允许内伸")));
+    m_range.put_Item(COleVariant((long)i),COleVariant((long)6),COleVariant(_T("接管名义厚度（mm）")));
+    m_range.put_Item(COleVariant((long)i),COleVariant((long)7),COleVariant(_T("接管最小内伸高度")));
+	m_range.put_Item(COleVariant((long)i),COleVariant((long)8),COleVariant(_T("接管最小外伸长度")));
+    m_range.put_Item(COleVariant((long)i),COleVariant((long)9),COleVariant(_T("标准号")));
+    m_range.put_Item(COleVariant((long)i),COleVariant((long)10),COleVariant(_T("补强最小宽度")));
+    m_range.put_Item(COleVariant((long)i),COleVariant((long)11),COleVariant(_T("补强圈最小厚度")));
+	m_range.put_Item(COleVariant((long)i),COleVariant((long)12),COleVariant(_T("备注")));
 
 
 	i++;
@@ -258,22 +257,20 @@ bool CPipeHole::save(CString file)
 		m_range.put_Item(COleVariant((long)i),COleVariant((long)3),COleVariant(str));
 		str.Format(_T("%.2f"), iter1->Do);
 		m_range.put_Item(COleVariant((long)i),COleVariant((long)4),COleVariant(str));
-		str.Format(_T("%.2f"), iter1->thick);
-		m_range.put_Item(COleVariant((long)i),COleVariant((long)5),COleVariant(str));
 		str = (iter1->extendIn) ? _T("是") : _T("否");
+		m_range.put_Item(COleVariant((long)i),COleVariant((long)5),COleVariant(str));
+		str.Format(_T("%.2f"), iter2->minDesignThick);
 		m_range.put_Item(COleVariant((long)i),COleVariant((long)6),COleVariant(str));
-		str.Format(_T("%.2f"), iter2->minThick);
-		m_range.put_Item(COleVariant((long)i),COleVariant((long)7),COleVariant(str));
 		str.Format(_T("%.2f"), iter2->minExtInHeight);
-		m_range.put_Item(COleVariant((long)i),COleVariant((long)8),COleVariant(str));
+		m_range.put_Item(COleVariant((long)i),COleVariant((long)7),COleVariant(str));
 		str.Format(_T("%.2f"), iter2->minExtOutHeight);
-		m_range.put_Item(COleVariant((long)i),COleVariant((long)9),COleVariant(str));
+		m_range.put_Item(COleVariant((long)i),COleVariant((long)8),COleVariant(str));
 		str = iter2->GBStr;
-		m_range.put_Item(COleVariant((long)i),COleVariant((long)10),COleVariant(str));
+		m_range.put_Item(COleVariant((long)i),COleVariant((long)9),COleVariant(str));
 		str.Format(_T("%.2f"), iter2->minWidth);
-		m_range.put_Item(COleVariant((long)i),COleVariant((long)11),COleVariant(str));
+		m_range.put_Item(COleVariant((long)i),COleVariant((long)10),COleVariant(str));
 		str.Format(_T("%.2f"), iter2->addPressThick);
-		m_range.put_Item(COleVariant((long)i),COleVariant((long)12),COleVariant(str));
+		m_range.put_Item(COleVariant((long)i),COleVariant((long)11),COleVariant(str));
 		switch(iter2->recommendAddPress) {
 			case COMMENT_ADD_PRESS:
 				str = _T("建议采用补强圈进行补强");

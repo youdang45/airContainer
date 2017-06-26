@@ -408,7 +408,17 @@ void CContainerModel::setDiStep(int s)
 	m_DiStep = s;
 }
 
+int CContainerModel::getDiStep()
+{
+	return m_DiStep;
+}
+
 void CContainerModel::setRoundedBase(float b)
 {
 	m_roundedBase = b;
+}
+
+float CContainerModel::getRoundedBase()
+{
+	return m_roundedBase;
 }

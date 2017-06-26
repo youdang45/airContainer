@@ -4,7 +4,7 @@
 #include "CContainerInfo.h"
 #include "CGBStandard.h"
 
-
+using namespace std;
 
 CPipeModel *CPipeModel::m_pInstance = NULL;
 const float CPipeModel::m_Phi_t = 1;
@@ -166,11 +166,16 @@ bool CPipeModel::pipeSubCalc(pipeConfig_t &pipeConf, float Delet_nt,
 			result.minExtInHeight = 0;
 		}
 		result.minExtOutHeight = m_h_1;
-		if (!result.GBStr.IsEmpty()) {
-			result.GBStr += _T(", ");
-		}
 		CString str = getGBStdNameByNum(gbNo);
-		result.GBStr += str;
+		int found = result.GBStr.Find(str);
+		if (found == -1) {
+			if (!result.GBStr.IsEmpty()) {
+				result.GBStr += _T(", ");
+			}
+			
+			result.GBStr += str;
+		} 
+
 		if (pipeConf.isAddStress) {
 			result.recommendAddPress = COMMENT_NOT_ADD_PRESS;
 		} else {
@@ -190,10 +195,16 @@ bool CPipeModel::pipeSubCalc(pipeConfig_t &pipeConf, float Delet_nt,
 				result.minExtInHeight = 0;
 			}
 			result.minExtOutHeight = m_h_1;
-			if (!result.GBStr.IsEmpty()) {
-				result.GBStr += _T(", ");
-			}
 			CString str = getGBStdNameByNum(gbNo);
+			int found = result.GBStr.Find(str);
+			if (found == -1) {
+				if (!result.GBStr.IsEmpty()) {
+					result.GBStr += _T(", ");
+				}
+				
+				result.GBStr += str;
+			}
+
 			result.GBStr += str;
 			result.minWidth = B/2.0 - pipeConf.Do / 2.0;
 			result.addPressThick = (A-Ae) / (2.0 * result.minWidth);

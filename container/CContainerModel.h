@@ -32,7 +32,9 @@ public:
 	~CContainerModel();
 	bool calcContainer();
 	void setDiStep(int s);
+	int getDiStep();
 	void setRoundedBase(float b);
+	float getRoundedBase();
 
 private:
 	CContainerModel();

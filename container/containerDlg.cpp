@@ -123,7 +123,6 @@ BOOL Ccontainer2Dlg::OnInitDialog()
 	initCombo();
 	setConConfigInfo();
     initResultList();
-	setDefaultConfig();
 	fillContainerResultList();
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
@@ -221,7 +220,7 @@ void Ccontainer2Dlg::initResultList()
 
     lvColumn.mask = LVCF_FMT | LVCF_TEXT | LVCF_WIDTH;
     lvColumn.fmt = LVCFMT_CENTER;
-    lvColumn.cx = UsualWidth + 50;
+    lvColumn.cx = UsualWidth + 30;
     strText = _T("封头直边高度（mm）");
     lvColumn.pszText = (LPTSTR)(LPCTSTR)strText;
     m_resultList.InsertColumn(5, &lvColumn);
@@ -247,10 +246,10 @@ void Ccontainer2Dlg::initResultList()
 
 void Ccontainer2Dlg::initCombo()
 {
-	m_materialCombo.AddString(_T("Q245R"));
-	m_materialCombo.AddString(_T("Q345R"));
-	m_materialCombo.AddString(_T("S30408"));
-	m_materialCombo.AddString(_T("Q235B"));
+	m_materialCombo.AddString(steelNumStrMap[Q245R].steelNumName);
+	m_materialCombo.AddString(steelNumStrMap[Q345R].steelNumName);
+	m_materialCombo.AddString(steelNumStrMap[S30408].steelNumName);
+	m_materialCombo.AddString(steelNumStrMap[Q235B].steelNumName);
 
 	m_coefCombo.AddString(_T("0.85"));
 	m_coefCombo.AddString(_T("1.00"));
@@ -328,7 +327,7 @@ void Ccontainer2Dlg::OnBnClickedConCacl()
 	float thickNegWindage = 0;  //厚度负偏差
 	float cauterization = 0;    //腐蚀裕量
 	float roundedBase = 0;        //壁厚步长
-	float DiStep = 0;           //内径计算步长
+	int DiStep = 0;           //内径计算步长
 	conInstallType_t installType = CON_INST_TYPE_INVALID;
 	conConfig_t config;
 	float lengthMin = 0;
@@ -367,7 +366,7 @@ void Ccontainer2Dlg::OnBnClickedConCacl()
 	roundedBase = _wtof(str);
 
 	GetDlgItemText(IDC_EDIT_STEP, str);
-	DiStep = _wtof(str);
+	DiStep = _ttoi(str);
 
 	GetDlgItemText(IDC_COMBO_IT, str);
 	installType = getConInstallTypeByStr(str);
@@ -408,8 +407,7 @@ void Ccontainer2Dlg::OnBnClickedConCacl()
 	config.coefficient = coefficient; 
 	config.conMetarial = conMetarial; 
 	config.thickNegWindage = thickNegWindage;
-	config.cauterization = cauterization; 
-	config.DiStep = DiStep; 
+	config.cauterization = cauterization;  
 	config.installType = installType; 
 	config.lengthMin = lengthMin; 
 	config.lengthMax = lengthMax; 
@@ -444,9 +442,11 @@ void Ccontainer2Dlg::setConConfigInfo()
 	containerInfo = CContainerInfo::GetInstance();
 	containerType_t ct = CONTAINER_TYPE_INVALID;
 	conConfig_t config;
-	float v = 0, p = 0, c = 0, ca = 0;
+	float v = 0, p = 0, c = 0, ca = 0, tnw = 0, rb = 0;
 	SteelNumber_t m = SteelNumberNone;
+	conInstallType_t installT = CON_INST_TYPE_INVALID;
 	short t = 0;
+	int s = 0;
 	CString str;
 
 	bool ret = containerInfo->getContainerConfig(config);
@@ -459,6 +459,13 @@ void Ccontainer2Dlg::setConConfigInfo()
 		t = config.temperature;
 		c = config.coefficient;
 		ca = config.cauterization;
+		tnw = config.thickNegWindage;
+		s = config.DiStep;
+		installT = config.installType;
+
+		CContainerModel * p_conModel = CContainerModel::GetInstance();
+		rb = p_conModel->getRoundedBase();
+		s = p_conModel->getDiStep();
 
 		m_containerType.SetCurSel(ct-1);
 
@@ -472,7 +479,7 @@ void Ccontainer2Dlg::setConConfigInfo()
 		GetDlgItem(IDC_EDIT_T)->SetWindowText(str);
 
 		str.Format(_T("%.2f"), c);
-		GetDlgItem(IDC_EDIT_P)->SetWindowText(str); 
+		m_coefCombo.SetWindowText(str); 
 
 		if (ca > 0.00001) {
 			str.Format(_T("%.2f"), ca);
@@ -480,6 +487,17 @@ void Ccontainer2Dlg::setConConfigInfo()
 		}
 
 		m_materialCombo.SetCurSel(m-1);
+
+		str.Format(_T("%.2f"), tnw);
+		GetDlgItem(IDC_EDIT_TNW)->SetWindowText(str);
+
+		str.Format(_T("%d"), s);
+		GetDlgItem(IDC_EDIT_STEP)->SetWindowText(str);
+
+		str.Format(_T("%.2f"), rb);
+		m_roundedBase.SetWindowText(str); 
+
+		m_installType.SetCurSel(installT - 1);
 
 	} else {
 		setDefaultConfig();
