@@ -69,6 +69,11 @@ bool CContainerInfo::getContainerConfig(conConfig_t &config)
 	config.cauterization = m_cauterization;
 	config.installType = m_conInstType;
 	config.thickNegWindage = m_thickNegWindage;
+	config.outputNum = m_outputNum;
+	config.lengthMin = m_lengthMin;   
+	config.lengthMax = m_lengthMax;
+	config.lengthDiRateMin = m_lengthDiRateMin;
+	config.lengthDiRateMax = m_lengthDiRateMax;
 
 
 	return TRUE;
@@ -164,6 +169,7 @@ bool CContainerInfo::save(CString file)
 {
 	bool ret = FALSE;
 	CString str;
+	CRange range;
 
 	COleException pe;  
     if (!m_ecApp.CreateDispatch(_T("Excel.Application"), &pe))  
@@ -207,15 +213,20 @@ bool CContainerInfo::save(CString file)
     }
 	m_ecSheet.put_Name(_T("储罐计算结果"));
 
+	range = m_ecSheet.get_Columns();
+	range.AutoFit();
+
 	m_range = m_ecSheet.get_Cells();
     if(!m_range.m_lpDispatch)   
     {  
         AfxMessageBox(_T("m_range为空!"), MB_OK|MB_ICONWARNING);  
         return FALSE;  
     }
+	m_range.put_HorizontalAlignment(COleVariant((long)-4108));
+	m_range.put_VerticalAlignment(COleVariant((long)-4108));
 
 	//填写配置信息
-	CRange range = m_ecSheet.get_Range(COleVariant(_T("A1")),COleVariant(_T("I1")));
+	range = m_ecSheet.get_Range(COleVariant(_T("A1")),COleVariant(_T("I1")));
 	range.Merge(VOptional);
 	m_range.put_Item(COleVariant((long)1),COleVariant((long)1),COleVariant(_T("容器配置信息:")));
 

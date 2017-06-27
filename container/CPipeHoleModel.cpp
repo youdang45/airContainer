@@ -139,7 +139,7 @@ bool CPipeModel::pipeSubCalc(pipeConfig_t &pipeConf, float Delet_nt,
 	float B = calcWidth(Delet_nt);
 	calcLenght(m_Dop, Delet_nt, pipeConf.extendIn);
 	Delet_et = Delet_nt - m_C_2;
-	
+
 	if (S30408 == pipeMaterial) {
 		Delet_mt = (Delet_nt < 12.75) ? (Delet_nt/0.875) : (Delet_nt/0.85);
 		gbNo = GB_T_14976;
@@ -157,15 +157,15 @@ bool CPipeModel::pipeSubCalc(pipeConfig_t &pipeConf, float Delet_nt,
 	float Ae = A1 + A2 + A3;
 	if (Ae >= A) {
 		m_delet_nr = Delet_nt;
-		result.minThick = Delet_nt;
-		result.minDesignThick = Delet_mt;
+		result.minThick = pipeResCeil(Delet_nt);
+		result.minDesignThick = pipeResCeil(Delet_mt);
 		float v = (m_Di/2.0 - sqrt(pow(m_Di, 2)/4 - pow(pipeConf.Do, 2)/4));
 		if (pipeConf.extendIn) {
-			result.minExtInHeight = (v > m_h_2) ? v : m_h_2;
+			result.minExtInHeight = pipeResCeil((v > m_h_2) ? v : m_h_2);
 		} else {
 			result.minExtInHeight = 0;
 		}
-		result.minExtOutHeight = m_h_1;
+		result.minExtOutHeight = pipeResCeil(m_h_1);
 		CString str = getGBStdNameByNum(gbNo);
 		int found = result.GBStr.Find(str);
 		if (found == -1) {
@@ -186,15 +186,15 @@ bool CPipeModel::pipeSubCalc(pipeConfig_t &pipeConf, float Delet_nt,
 		return TRUE;
 	} else {
 		if (pipeConf.isAddStress) {
-			result.minThick = Delet_nt;
-			result.minDesignThick = Delet_mt;
+			result.minThick = pipeResCeil(Delet_nt);
+			result.minDesignThick = pipeResCeil(Delet_mt);
 			float v = (m_Di/2.0 - sqrt(pow(m_Di, 2)/4 - pow(pipeConf.Do, 2)/4));
 			if (pipeConf.extendIn) {
-				result.minExtInHeight = (v > m_h_2) ? v : m_h_2;
+				result.minExtInHeight = pipeResCeil((v > m_h_2) ? v : m_h_2);
 			} else {
 				result.minExtInHeight = 0;
 			}
-			result.minExtOutHeight = m_h_1;
+			result.minExtOutHeight = pipeResCeil(m_h_1);
 			CString str = getGBStdNameByNum(gbNo);
 			int found = result.GBStr.Find(str);
 			if (found == -1) {
@@ -205,9 +205,8 @@ bool CPipeModel::pipeSubCalc(pipeConfig_t &pipeConf, float Delet_nt,
 				result.GBStr += str;
 			}
 
-			result.GBStr += str;
-			result.minWidth = B/2.0 - pipeConf.Do / 2.0;
-			result.addPressThick = (A-Ae) / (2.0 * result.minWidth);
+			result.minWidth = pipeResCeil(B/2.0 - pipeConf.Do / 2.0);
+			result.addPressThick = pipeResCeil((A-Ae) / (2.0 * result.minWidth));
 			return TRUE;
 		}
 	}
@@ -256,6 +255,10 @@ bool CPipeModel::isDelet_ntValid(float Do, float delet_nt)
 	}
 }
 
+float CPipeModel::pipeResCeil(float v)
+{
+	return ceil(v*10)/10;
+}
 
 //----------------------------------------------------------------------------
 const float CHoleModel::A3r = 18;

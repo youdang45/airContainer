@@ -19,7 +19,7 @@ void floatToStr(float v, CString & str) {
 	if(-0.000001<v && v<0.000001) {
 		str = _T("0");
 	} else {
-		str.Format(_T("%.2f"), v);
+		str.Format(_T("%.1f"), v);
 	}
 }
 

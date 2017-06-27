@@ -384,7 +384,7 @@ void Ccontainer2Dlg::OnBnClickedConCacl()
 	lengthDiRateMax = _wtof(str);
 	
 	GetDlgItemText(IDC_EDIT_OUTPUT_NUM, str);
-	outputNum = _wtoi(str);
+	outputNum = _ttoi(str);
 
 	if (conType == CONTAINER_TYPE_SIMPLE) {
 		checkRet = simpleConInputIsValid(pressure, volume, temperature);
@@ -499,6 +499,22 @@ void Ccontainer2Dlg::setConConfigInfo()
 
 		m_installType.SetCurSel(installT - 1);
 
+		str.Format(_T("%.2f"), config.lengthMin);
+		GetDlgItem(IDC_EDIT_HEIGHT_MIN)->SetWindowText(str);
+		if (config.lengthMax){
+			str.Format(_T("%.2f"), config.lengthMax);
+			GetDlgItem(IDC_EDIT_HEIGHT_MAX)->SetWindowText(str);
+		}
+
+		str.Format(_T("%.2f"), config.lengthDiRateMin);
+		GetDlgItem(IDC_EDIT_HDR_MIN)->SetWindowText(str); 
+		if (config.lengthDiRateMax) {
+			str.Format(_T("%.2f"), config.lengthDiRateMax);
+			GetDlgItem(IDC_EDIT_HDR_MAX)->SetWindowText(str); 
+		}
+
+		str.Format(_T("%u"), config.outputNum);
+		GetDlgItem(IDC_EDIT_OUTPUT_NUM)->SetWindowText(str);
 	} else {
 		setDefaultConfig();
 	}

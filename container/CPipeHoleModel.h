@@ -18,6 +18,7 @@ private:
 	void calcLenght(float Dop, float delet_n, bool isExtIn);
 	bool pipeSubCalc(pipeConfig_t &pipeConf, float Delet_nt, pipeCalcResult_t &result);
 	bool isDelet_ntValid(float Do, float delet_nt);
+	float CPipeModel::pipeResCeil(float v);
 
 private:
 	static CPipeModel *m_pInstance;

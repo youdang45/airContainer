@@ -83,7 +83,7 @@ CAPTION "关于 空气储罐计算器"
 FONT 9, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,14,14,20,20
-    LTEXT           "空气储罐计算器，0.1.6 版",IDC_STATIC,42,14,114,8,SS_NOPREFIX
+    LTEXT           "空气储罐计算器，0.2.3 版",IDC_STATIC,42,14,114,8,SS_NOPREFIX
     LTEXT           "Copyright (C) 2016",IDC_STATIC,42,26,114,8
     DEFPUSHBUTTON   "确定",IDOK,113,41,50,14,WS_GROUP
 END
@@ -205,7 +205,7 @@ BEGIN
             VALUE "LegalCopyright", "TODO: (C) <公司名>。保留所有权利。"
             VALUE "OriginalFilename", "空气储罐计算器.exe"
             VALUE "ProductName", "空气储罐计算器"
-            VALUE "ProductVersion", "0.0.1.6"
+            VALUE "ProductVersion", "0.0.2.3"
         END
     END
     BLOCK "VarFileInfo"
