@@ -47,8 +47,8 @@ private:
 	float calcCapHight();
 	float calcLength(float V, float Di);
 	void calcContainerByDiWalk(float thickMax, float thickMin, bool isFirstLine);
-	float calcConDeletN(float delet);
-	float calcCapDeletN(float delet);
+	float calcConDeltaN(float delta);
+	float calcCapDeltaN(float delta);
 	checkReturn_t checkConDiISOK(float L, float h, float Di, float Delta_1_n,
 		                         float Delta_2_n, float thickMax, float thickMin, bool isFirstLine);
 	float calcWeight(float l, float h, float Di, float Delta_1n, float Delta_2n);

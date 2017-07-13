@@ -506,10 +506,10 @@ void Ccontainer2Dlg::setConConfigInfo()
 			GetDlgItem(IDC_EDIT_HEIGHT_MAX)->SetWindowText(str);
 		}
 
-		str.Format(_T("%.2f"), config.lengthDiRateMin);
+		str.Format(_T("%f"), config.lengthDiRateMin);
 		GetDlgItem(IDC_EDIT_HDR_MIN)->SetWindowText(str); 
 		if (config.lengthDiRateMax) {
-			str.Format(_T("%.2f"), config.lengthDiRateMax);
+			str.Format(_T("%f"), config.lengthDiRateMax);
 			GetDlgItem(IDC_EDIT_HDR_MAX)->SetWindowText(str); 
 		}
 
@@ -567,7 +567,7 @@ void Ccontainer2Dlg::fillContainerResultList()
 		str.Format(_T("%d"), (i+1));
 		m_resultList.InsertItem(i, str);
 
-		str.Format(_T("%.2f"), iter->diameterIn);
+		str.Format(_T("%.0f"), iter->diameterIn);
 		m_resultList.SetItemText(i, 1, str);
 
 		str.Format(_T("%.2f(%.2f)"), iter->conThick, iter->conCalcThick);

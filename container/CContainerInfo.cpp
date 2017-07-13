@@ -277,7 +277,7 @@ bool CContainerInfo::save(CString file)
 
 		str.Format(_T("%d"), (i-7));
 		m_range.put_Item(COleVariant((long)i),COleVariant((long)1),COleVariant(str));
-		str.Format(_T("%.2f"), iter->diameterIn);
+		str.Format(_T("%.0f"), iter->diameterIn);
 		m_range.put_Item(COleVariant((long)i),COleVariant((long)2),COleVariant(str));
 		str.Format(_T("%.2f(%.2f)"), iter->conThick, iter->conCalcThick);
 		m_range.put_Item(COleVariant((long)i),COleVariant((long)3),COleVariant(str));

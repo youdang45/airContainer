@@ -360,7 +360,7 @@ void C2ndDiaglog::initConnectResultHeader()
     lvColumn.mask = LVCF_FMT | LVCF_TEXT | LVCF_WIDTH;
     lvColumn.fmt = LVCFMT_CENTER;
     lvColumn.cx = UsualWidth - 30;
-    strText = _T("补强最小宽度");
+    strText = _T("补强圈最小宽度");
     lvColumn.pszText = (LPTSTR)(LPCTSTR)strText;
     this->m_connectResults.InsertColumn(5, &lvColumn);
 

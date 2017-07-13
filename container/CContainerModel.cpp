@@ -134,8 +134,8 @@ void CContainerModel::calcContainerByDiWalk(float thickMax, float thickMin, bool
 		}
 		Delta_1 = m_P * Di / (2 * m_Sigma_T * m_Phi - m_P);
 		Delta_2 = m_P * Di / (2 * m_Sigma_T - 0.5 * m_P);
-		Delta_1n = calcConDeletN(Delta_1);
-		Delta_2n = calcCapDeletN(Delta_2);
+		Delta_1n = calcConDeltaN(Delta_1);
+		Delta_2n = calcCapDeltaN(Delta_2);
 		checkPass = checkConDiISOK(L, h, Di, Delta_1n, Delta_2n, thickMax, thickMin, isFirstLine);
 		switch(checkPass) {
 			case CHECK_FAIL_1:
@@ -231,18 +231,18 @@ float CContainerModel::rounded(float f)
 	}
 }
 
-float CContainerModel::calcConDeletN(float delet)
+float CContainerModel::calcConDeltaN(float delta)
 {
 	float ret = 0;
 	int n = 0;
 	float sum = 0;
 
-	sum = (delet + m_C_1 + m_C_2);
+	sum = (delta + m_C_1 + m_C_2);
 	return rounded(sum);
 }
 
 
-float CContainerModel::calcCapDeletN(float delta)
+float CContainerModel::calcCapDeltaN(float delta)
 {
 	float ret = 0;
 	int n = 0;

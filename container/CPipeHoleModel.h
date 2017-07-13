@@ -13,12 +13,15 @@ public:
 private:
 	CPipeModel();
 	bool calcPerPipe(pipeConfig_t &pipeConf);
-	float calcDeletNT(float Delet_t);
-	float calcWidth(float delet_n);
-	void calcLenght(float Dop, float delet_n, bool isExtIn);
-	bool pipeSubCalc(pipeConfig_t &pipeConf, float Delet_nt, pipeCalcResult_t &result);
-	bool isDelet_ntValid(float Do, float delet_nt);
+	float calcDeltaNT(float Delta_t);
+	float calcWidth(float delta_n);
+	void calcLenght(float Dop, float delta_n, bool isExtIn);
+	bool pipeSubCalc(pipeConfig_t &pipeConf, float Delta_nt,
+		                float Delta_1n, pipeCalcResult_t &result);
+	bool isDelta_ntValid(float Do, float delta_nt);
 	float CPipeModel::pipeResCeil(float v);
+	float CPipeModel::pipeJointingCalc(float delta_nt, float delta_1n);
+
 
 private:
 	static CPipeModel *m_pInstance;
@@ -41,11 +44,11 @@ private:
 	float m_P;
 	float m_h_1;
 	float m_h_2;
-	float m_delet_nr;
+	float m_delta_nr;
 	float m_Di; 
 	float m_sigma_Tt;
-	float m_Delet_t;
-	float m_Delet_ntMin;
+	float m_Delta_t;
+	float m_Delta_ntMin;
 };
 
 class CHoleModel {
@@ -57,16 +60,17 @@ public:
 private:
 	CHoleModel();
 	bool initThick();
-	bool calcLenght(float delet_nr);
-	float calcWidth(float delet_nr);
-	float calcHoleDeletN(float delet);
+	bool calcLenght(float delta_nr);
+	float calcWidth(float delta_nr);
+	float calcHoleDeltaN(float delta);
+	float holeJointingCalc(float delta_nr, float delta_1n);
+
 
 private:
 	static CHoleModel *m_pInstance;
 	holeCalcResult_t m_result;
 
-	static const float A3r;
-	float m_delet_nr;//短节厚度, 名义厚度
+	float m_delta_nr;//短节厚度, 名义厚度
 	float m_P;
 	float m_Da;  //内径长轴
 	float m_Db;  //内径短轴
@@ -76,10 +80,6 @@ private:
 	float m_Br;   //有效宽度
 	float m_h_1r; //外伸人孔有效补强高度
 	float m_h_2r; //内伸人孔有效补强高度
-	float m_A_er; //人孔补强面积
-	float m_A_1r; //壳体有效厚度减去计算厚度之外的多余面积
-	float m_A_2r; //人孔有效厚度减去计算厚度之外的多余面积
-	static float m_A_3r; //焊缝金属截面积
 	float m_C_1;         //钢板厚度负偏差
 	float m_C_2;         //腐蚀裕量
 	holeSize_t m_size;   //人孔尺寸
